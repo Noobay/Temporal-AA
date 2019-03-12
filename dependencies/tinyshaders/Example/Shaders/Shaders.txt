@@ -1,0 +1,14 @@
+1
+TestShader
+2
+Position
+UV
+1
+OutColor
+2
+VertexShader
+Vertex
+./Shaders/vertex.glsl
+FragmentShader
+Fragment
+./Shaders/pixel.glsl

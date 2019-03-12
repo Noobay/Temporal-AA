@@ -1,0 +1,455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0F63B7EE-1BEB-39E4-B54F-9968D44EC410}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\projects\Portfolio\dependencies\gli\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\projects\Portfolio\dependencies\gli\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\projects\Portfolio\dependencies\gli\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\projects\Portfolio\dependencies\gli\.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\projects\Portfolio\dependencies\gli\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/projects/Portfolio/dependencies/gli/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/projects/Portfolio/dependencies/gli -BD:/projects/Portfolio/dependencies/gli --check-stamp-file D:/projects/Portfolio/dependencies/gli/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/projects/Portfolio/dependencies/gli/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.12\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.12\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\WriteBasicConfigVersionFile.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeCCompiler.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeCXXCompiler.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeRCCompiler.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeSystem.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\feature_tests.c;D:\projects\Portfolio\dependencies\gli\CMakeFiles\feature_tests.cxx;D:\projects\Portfolio\dependencies\gli\CMakeLists.txt;D:\projects\Portfolio\dependencies\gli\cmake\CMakePackageConfigHelpers.cmake;D:\projects\Portfolio\dependencies\gli\cmake\GNUInstallDirs.cmake;D:\projects\Portfolio\dependencies\gli\cmake\gliBuildConfig.cmake.in;D:\projects\Portfolio\dependencies\gli\cmake\gliConfig.cmake.in;D:\projects\Portfolio\dependencies\gli\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\projects\Portfolio\dependencies\gli\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/projects/Portfolio/dependencies/gli/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/projects/Portfolio/dependencies/gli -BD:/projects/Portfolio/dependencies/gli --check-stamp-file D:/projects/Portfolio/dependencies/gli/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/projects/Portfolio/dependencies/gli/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.12\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.12\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\WriteBasicConfigVersionFile.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeCCompiler.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeCXXCompiler.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeRCCompiler.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeSystem.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\feature_tests.c;D:\projects\Portfolio\dependencies\gli\CMakeFiles\feature_tests.cxx;D:\projects\Portfolio\dependencies\gli\CMakeLists.txt;D:\projects\Portfolio\dependencies\gli\cmake\CMakePackageConfigHelpers.cmake;D:\projects\Portfolio\dependencies\gli\cmake\GNUInstallDirs.cmake;D:\projects\Portfolio\dependencies\gli\cmake\gliBuildConfig.cmake.in;D:\projects\Portfolio\dependencies\gli\cmake\gliConfig.cmake.in;D:\projects\Portfolio\dependencies\gli\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\projects\Portfolio\dependencies\gli\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/projects/Portfolio/dependencies/gli/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/projects/Portfolio/dependencies/gli -BD:/projects/Portfolio/dependencies/gli --check-stamp-file D:/projects/Portfolio/dependencies/gli/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:/projects/Portfolio/dependencies/gli/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.12\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.12\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\WriteBasicConfigVersionFile.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeCCompiler.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeCXXCompiler.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeRCCompiler.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeSystem.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\feature_tests.c;D:\projects\Portfolio\dependencies\gli\CMakeFiles\feature_tests.cxx;D:\projects\Portfolio\dependencies\gli\CMakeLists.txt;D:\projects\Portfolio\dependencies\gli\cmake\CMakePackageConfigHelpers.cmake;D:\projects\Portfolio\dependencies\gli\cmake\GNUInstallDirs.cmake;D:\projects\Portfolio\dependencies\gli\cmake\gliBuildConfig.cmake.in;D:\projects\Portfolio\dependencies\gli\cmake\gliConfig.cmake.in;D:\projects\Portfolio\dependencies\gli\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\projects\Portfolio\dependencies\gli\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/projects/Portfolio/dependencies/gli/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/projects/Portfolio/dependencies/gli -BD:/projects/Portfolio/dependencies/gli --check-stamp-file D:/projects/Portfolio/dependencies/gli/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:/projects/Portfolio/dependencies/gli/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.12\Modules\BasicConfigVersion-AnyNewerVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXCompilerABI.cpp;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeParseArguments.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCXXCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Comeau-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Compaq-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\GNU-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\HP-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\IBMCPP-CXX-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MIPSpro-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX-FeatureTests.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\SunPro-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\VisualAge-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\XL-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Compiler\zOS-CXX-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.12\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-Determine-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\WriteBasicConfigVersionFile.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeCCompiler.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeCXXCompiler.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeRCCompiler.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\3.12.1\CMakeSystem.cmake;D:\projects\Portfolio\dependencies\gli\CMakeFiles\feature_tests.c;D:\projects\Portfolio\dependencies\gli\CMakeFiles\feature_tests.cxx;D:\projects\Portfolio\dependencies\gli\CMakeLists.txt;D:\projects\Portfolio\dependencies\gli\cmake\CMakePackageConfigHelpers.cmake;D:\projects\Portfolio\dependencies\gli\cmake\GNUInstallDirs.cmake;D:\projects\Portfolio\dependencies\gli\cmake\gliBuildConfig.cmake.in;D:\projects\Portfolio\dependencies\gli\cmake\gliConfig.cmake.in;D:\projects\Portfolio\dependencies\gli\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\projects\Portfolio\dependencies\gli\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\ZERO_CHECK.vcxproj">
+      <Project>{53A0B3BE-7B62-338A-AEBE-94C351AB0F5B}</Project>
+      <Name>ZERO_CHECK</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\gli\gli_dummy.vcxproj">
+      <Project>{4C63113C-6BD5-3F55-B2A6-A0C245650368}</Project>
+      <Name>gli_dummy</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\bug\test-bug.vcxproj">
+      <Project>{B4BF61AB-6B15-35EE-9904-52834445A5DB}</Project>
+      <Name>test-bug</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-convert_sampler1d.vcxproj">
+      <Project>{0FA7B811-3F8D-34CD-B1F8-051C4653D39B}</Project>
+      <Name>test-convert_sampler1d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-convert_sampler1d_array.vcxproj">
+      <Project>{AFDFD4A6-48EF-370A-927E-CC6E0D394A0E}</Project>
+      <Name>test-convert_sampler1d_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-convert_sampler2d.vcxproj">
+      <Project>{DF6216BE-7D8E-3C06-8FD2-B0F47174B100}</Project>
+      <Name>test-convert_sampler2d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-convert_sampler2d_array.vcxproj">
+      <Project>{E8076D7F-2067-30B7-817F-145EC421D6B0}</Project>
+      <Name>test-convert_sampler2d_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-convert_sampler3d.vcxproj">
+      <Project>{C71A1D46-523F-3C44-9F68-6886733CD026}</Project>
+      <Name>test-convert_sampler3d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-convert_sampler_cube.vcxproj">
+      <Project>{F7BE7C7E-247C-3DA8-A284-86E8BDD25CE1}</Project>
+      <Name>test-convert_sampler_cube</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-convert_sampler_cube_array.vcxproj">
+      <Project>{1D4EE0C9-8422-368B-8E0D-11C36A6ECE53}</Project>
+      <Name>test-convert_sampler_cube_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core.vcxproj">
+      <Project>{54431E2A-3106-3C89-A3CF-7111E5C2399D}</Project>
+      <Name>test-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_addressing.vcxproj">
+      <Project>{B3B7D7C0-64D4-3DED-A52B-9A5C5DDF7C2E}</Project>
+      <Name>test-core_addressing</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_clear.vcxproj">
+      <Project>{A393438D-7CAA-313C-BC72-4A91168756E3}</Project>
+      <Name>test-core_clear</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_comparison.vcxproj">
+      <Project>{13E4379C-47DD-39FA-82B0-41C3629C0F59}</Project>
+      <Name>test-core_comparison</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_convert.vcxproj">
+      <Project>{0E9A8E39-AFF8-346A-93C2-473B1ED6EC0B}</Project>
+      <Name>test-core_convert</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_convert_access.vcxproj">
+      <Project>{831E79F9-4769-3FB5-B609-648D95B8364A}</Project>
+      <Name>test-core_convert_access</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_fetch.vcxproj">
+      <Project>{BEE4D4E8-EE72-3825-8202-972230A61AC5}</Project>
+      <Name>test-core_fetch</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_filter_1d.vcxproj">
+      <Project>{3A923B65-6943-3690-87A6-50BFBFBDF5D4}</Project>
+      <Name>test-core_filter_1d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_filter_2d.vcxproj">
+      <Project>{2BE32E9F-FE93-3F45-AFC6-D4260AB0377D}</Project>
+      <Name>test-core_filter_2d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_filter_3d.vcxproj">
+      <Project>{96932640-B3D1-35CB-86DA-B177EEE65523}</Project>
+      <Name>test-core_filter_3d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_flip.vcxproj">
+      <Project>{BD37E6B3-8997-3715-8A8A-795EEC3A4AF1}</Project>
+      <Name>test-core_flip</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_format.vcxproj">
+      <Project>{EA4A1DBD-453B-3624-8371-07015F612607}</Project>
+      <Name>test-core_format</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_image.vcxproj">
+      <Project>{D5A392BC-7826-3994-BE8A-7A8556D9BFBB}</Project>
+      <Name>test-core_image</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_load.vcxproj">
+      <Project>{E2B0B40D-A1EF-36E4-86CC-8D1F11791D9F}</Project>
+      <Name>test-core_load</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_load_dds.vcxproj">
+      <Project>{24EA17FE-8F0C-3C58-8611-C024AFB4085B}</Project>
+      <Name>test-core_load_dds</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_load_gen_1d.vcxproj">
+      <Project>{B317B933-8909-38B6-AA75-0AFA03DD2635}</Project>
+      <Name>test-core_load_gen_1d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_load_gen_1d_array.vcxproj">
+      <Project>{6D158B48-6CB1-3025-B7A3-A8EB2982E03A}</Project>
+      <Name>test-core_load_gen_1d_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_load_gen_2d.vcxproj">
+      <Project>{6AE0A080-60CB-38D5-BFAC-3FBA25A0893B}</Project>
+      <Name>test-core_load_gen_2d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_load_gen_2d_array.vcxproj">
+      <Project>{1EBCFEFA-46A0-39F5-BD03-B01B7E811FE4}</Project>
+      <Name>test-core_load_gen_2d_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_load_gen_3d.vcxproj">
+      <Project>{F32D2007-7C45-3AE6-91EE-68CE74AAB9DA}</Project>
+      <Name>test-core_load_gen_3d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_load_gen_cube.vcxproj">
+      <Project>{3082AB06-C276-3432-B8FC-38305EBB3A37}</Project>
+      <Name>test-core_load_gen_cube</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_load_gen_cube_array.vcxproj">
+      <Project>{1E8331AD-7624-378B-BD95-C6AD057B5AD3}</Project>
+      <Name>test-core_load_gen_cube_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_load_gen_rect.vcxproj">
+      <Project>{3C066931-3830-3E19-BA9C-0308DAB02379}</Project>
+      <Name>test-core_load_gen_rect</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_load_ktx.vcxproj">
+      <Project>{5B9D970C-B663-3275-827B-0BBA760B0500}</Project>
+      <Name>test-core_load_ktx</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_sample.vcxproj">
+      <Project>{1256D2D8-D164-3995-8AA3-2C8467F2C5D8}</Project>
+      <Name>test-core_sample</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_sampler_clear.vcxproj">
+      <Project>{BA21EDDF-A659-3291-A2B4-EEC7BD9180C5}</Project>
+      <Name>test-core_sampler_clear</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_sampler_texel.vcxproj">
+      <Project>{976D0B91-CD14-349D-82BB-16B73D915C84}</Project>
+      <Name>test-core_sampler_texel</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_sampler_wrap.vcxproj">
+      <Project>{0E8742E0-ED60-3471-A6B6-D05EF87A89AF}</Project>
+      <Name>test-core_sampler_wrap</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_save.vcxproj">
+      <Project>{CCE0CF8F-4A18-3258-8BD0-7A270C0E1393}</Project>
+      <Name>test-core_save</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_storage.vcxproj">
+      <Project>{969F7B15-E77F-3038-89A2-F6E2604AD716}</Project>
+      <Name>test-core_storage</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_swizzle.vcxproj">
+      <Project>{00B82E25-2500-3FF3-B3CD-D1A69E91347F}</Project>
+      <Name>test-core_swizzle</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_texture.vcxproj">
+      <Project>{5D58F0A2-3015-3CAF-ADF4-88AB06B026D0}</Project>
+      <Name>test-core_texture</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_texture_1d.vcxproj">
+      <Project>{2A657CE3-85A6-34BD-A82A-717490DC030A}</Project>
+      <Name>test-core_texture_1d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_texture_1d_array.vcxproj">
+      <Project>{5A0C4BF4-A71E-332D-BCC6-13976115D406}</Project>
+      <Name>test-core_texture_1d_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_texture_2d.vcxproj">
+      <Project>{AF6A28C8-525A-37F7-B74C-EDE460BE4AE7}</Project>
+      <Name>test-core_texture_2d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_texture_2d_array.vcxproj">
+      <Project>{69F3A62D-878D-3A26-9F7C-1899F57BB3AA}</Project>
+      <Name>test-core_texture_2d_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_texture_3d.vcxproj">
+      <Project>{ECEDF56E-3DC7-3B3E-8E78-671A66B72D3E}</Project>
+      <Name>test-core_texture_3d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_texture_cube.vcxproj">
+      <Project>{B1844244-D169-385B-91F0-DF2CC030DAF3}</Project>
+      <Name>test-core_texture_cube</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-core_texture_cube_array.vcxproj">
+      <Project>{39F6BAF7-FA3A-30A6-AC4E-F2B4590F70CD}</Project>
+      <Name>test-core_texture_cube_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-generate_mipmaps_sampler1d.vcxproj">
+      <Project>{17DC58B3-F2E1-3F10-B1C7-6923A6F50FA1}</Project>
+      <Name>test-generate_mipmaps_sampler1d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-generate_mipmaps_sampler1d_array.vcxproj">
+      <Project>{FFC6BC45-C4C0-31CF-BE97-5FE88B35DFA2}</Project>
+      <Name>test-generate_mipmaps_sampler1d_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-generate_mipmaps_sampler2d.vcxproj">
+      <Project>{A3685A5E-E254-3AB0-92D5-8C578B293399}</Project>
+      <Name>test-generate_mipmaps_sampler2d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-generate_mipmaps_sampler2d_array.vcxproj">
+      <Project>{9AA4F189-10F3-352E-87F3-A88AF7A3CA06}</Project>
+      <Name>test-generate_mipmaps_sampler2d_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-generate_mipmaps_sampler3d.vcxproj">
+      <Project>{221A486F-7F68-3C43-9BE9-880569A78E99}</Project>
+      <Name>test-generate_mipmaps_sampler3d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-generate_mipmaps_sampler_cube.vcxproj">
+      <Project>{9311685C-4047-309E-A7C5-796E696284C2}</Project>
+      <Name>test-generate_mipmaps_sampler_cube</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-generate_mipmaps_sampler_cube_array.vcxproj">
+      <Project>{D947B0A6-9DBC-3EF7-91BD-B3DECCDB97ED}</Project>
+      <Name>test-generate_mipmaps_sampler_cube_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-gl.vcxproj">
+      <Project>{75038199-C251-3819-94C9-035C8939F371}</Project>
+      <Name>test-gl</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-reduce.vcxproj">
+      <Project>{59A9684D-6D9E-3280-AE1D-8245761A2AC8}</Project>
+      <Name>test-reduce</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-test_copy.vcxproj">
+      <Project>{ECC32ABB-C130-32D4-B36B-9BABE99DEC63}</Project>
+      <Name>test-test_copy</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-test_copy_sub.vcxproj">
+      <Project>{47C5B05E-0FFF-3016-B95F-F4020E0EB5F1}</Project>
+      <Name>test-test_copy_sub</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-test_duplicate.vcxproj">
+      <Project>{8406234D-DAF2-3711-92BD-E061E78CF2CB}</Project>
+      <Name>test-test_duplicate</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-test_make_texture.vcxproj">
+      <Project>{8DAC53EB-F82D-395C-BBD8-DC5B79A52B46}</Project>
+      <Name>test-test_make_texture</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-test_size.vcxproj">
+      <Project>{7FB9C315-2ACC-3BD9-802B-9C0604DC8CAB}</Project>
+      <Name>test-test_size</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-test_view.vcxproj">
+      <Project>{38BA6A26-F825-3BF3-919E-5FE25256C62A}</Project>
+      <Name>test-test_view</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-texture_lod_sampler1d.vcxproj">
+      <Project>{88B515BF-D01C-310B-8EAF-3BAEF409B249}</Project>
+      <Name>test-texture_lod_sampler1d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-texture_lod_sampler1d_array.vcxproj">
+      <Project>{77D8890D-8EB0-37EF-B6D1-4AA6A1F7D90A}</Project>
+      <Name>test-texture_lod_sampler1d_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-texture_lod_sampler2d.vcxproj">
+      <Project>{AC580907-6F2A-3019-90B1-93E8B4D1E591}</Project>
+      <Name>test-texture_lod_sampler2d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-texture_lod_sampler2d_array.vcxproj">
+      <Project>{B47744AC-D3D9-378E-B52E-78CBA718AB4A}</Project>
+      <Name>test-texture_lod_sampler2d_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-texture_lod_sampler3d.vcxproj">
+      <Project>{17EBD9CC-3B4B-30B5-AAD6-5CA08697BA9C}</Project>
+      <Name>test-texture_lod_sampler3d</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-texture_lod_sampler_cube.vcxproj">
+      <Project>{C3101676-F698-3FA8-AE42-92B9AE847163}</Project>
+      <Name>test-texture_lod_sampler_cube</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-texture_lod_sampler_cube_array.vcxproj">
+      <Project>{B6377561-0A52-325D-A3D7-8DE9BF6782B6}</Project>
+      <Name>test-texture_lod_sampler_cube_array</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\projects\Portfolio\dependencies\gli\test\core\test-transform.vcxproj">
+      <Project>{D6D47B04-D555-3E76-871B-6507A6E087C9}</Project>
+      <Name>test-transform</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
