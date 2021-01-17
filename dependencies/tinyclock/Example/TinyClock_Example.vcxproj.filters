@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\Ziyad\Desktop\TAA Source\dependencies\tinyclock\Example\Example.cpp">
+    <ClCompile Include="C:\Users\ziyad\Documents\Temporal-AA\dependencies\tinyclock\Example\Example.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\Ziyad\Desktop\TAA Source\dependencies\tinyclock\Include\TinyClock.h">
+    <ClInclude Include="C:\Users\ziyad\Documents\Temporal-AA\dependencies\tinyclock\Include\TinyClock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\Ziyad\Desktop\TAA Source\dependencies\tinyclock\Example\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\ziyad\Documents\Temporal-AA\dependencies\tinyclock\Example\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{EE9C7DC2-0E4A-3FD1-8CB0-C9DE6D5220FC}</UniqueIdentifier>
+      <UniqueIdentifier>{A500DA5E-A787-3F07-B0D0-987540451A66}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{29DCD85D-00FC-350B-8D49-4D78DB4B329A}</UniqueIdentifier>
+      <UniqueIdentifier>{02DC2F8F-C337-3EF9-8D44-DDC8BFC5E186}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

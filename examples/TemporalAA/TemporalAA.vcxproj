@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -19,8 +22,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{A949B9A9-0C67-3689-9897-DB7639B28995}</ProjectGuid>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectGuid>{11C6F8A0-B11F-3377-BF2A-F8304272B9E5}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <Keyword>Win32Proj</Keyword>
     <Platform>x64</Platform>
     <ProjectName>TemporalAA</ProjectName>
@@ -30,22 +33,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -56,25 +59,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\projects\Portfolio\examples\TemporalAA\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\Debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TemporalAA.dir\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">TemporalAA</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\projects\Portfolio\examples\TemporalAA\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\Release\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TemporalAA.dir\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">TemporalAA</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\projects\Portfolio\examples\TemporalAA\MinSizeRel\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\MinSizeRel\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">TemporalAA.dir\MinSizeRel\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">TemporalAA</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\projects\Portfolio\examples\TemporalAA\RelWithDebInfo\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\RelWithDebInfo\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">TemporalAA.dir\RelWithDebInfo\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">TemporalAA</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
@@ -83,27 +86,27 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\projects\Portfolio\examples\TemporalAA\..\..\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinywindow\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyextender\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyclock\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\imgui;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\glm;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\gli;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\assimp\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\stb;D:\projects\Portfolio\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <AdditionalIncludeDirectories>C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Dependencies;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyextender\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyclock\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\imgui;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\glm;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\gli;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\assimp\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\stb;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <CompileAs>CompileAsCpp</CompileAs>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\projects\Portfolio\examples\TemporalAA\..\..\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinywindow\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyextender\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyclock\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\imgui;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\glm;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\gli;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\assimp\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\stb;D:\projects\Portfolio\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Dependencies;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyextender\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyclock\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\imgui;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\glm;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\gli;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\assimp\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\stb;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\projects\Portfolio\examples\TemporalAA\..\..\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinywindow\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyextender\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyclock\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\imgui;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\glm;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\gli;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\assimp\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\stb;D:\projects\Portfolio\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Dependencies;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyextender\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyclock\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\imgui;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\glm;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\gli;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\assimp\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\stb;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -111,13 +114,13 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>../../dependencies/assimp/lib/Debug/assimp-vc140-mt.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>../../dependencies/assimp/lib/Debug/assimp-vc142-mtd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>D:/projects/Portfolio/examples/TemporalAA/Debug/TemporalAA.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/projects/Portfolio/examples/TemporalAA/Debug/TemporalAA.pdb</ProgramDataBaseFile>
+      <ImportLibrary>C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/Debug/TemporalAA.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/Debug/TemporalAA.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -126,29 +129,27 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\projects\Portfolio\examples\TemporalAA\..\..\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinywindow\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyextender\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyclock\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\imgui;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\glm;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\gli;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\assimp\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\stb;D:\projects\Portfolio\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AssemblerListingLocation>Release/</AssemblerListingLocation>
-      <CompileAs>CompileAsCpp</CompileAs>
+      <AdditionalIncludeDirectories>C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Dependencies;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyextender\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyclock\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\imgui;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\glm;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\gli;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\assimp\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\stb;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\projects\Portfolio\examples\TemporalAA\..\..\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinywindow\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyextender\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyclock\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\imgui;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\glm;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\gli;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\assimp\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\stb;D:\projects\Portfolio\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Dependencies;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyextender\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyclock\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\imgui;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\glm;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\gli;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\assimp\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\stb;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\projects\Portfolio\examples\TemporalAA\..\..\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinywindow\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyextender\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyclock\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\imgui;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\glm;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\gli;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\assimp\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\stb;D:\projects\Portfolio\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Dependencies;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyextender\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyclock\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\imgui;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\glm;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\gli;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\assimp\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\stb;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -156,13 +157,13 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>../../dependencies/assimp/lib/Debug/assimp-vc140-mt.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>../../dependencies/assimp/lib/Debug/assimp-vc142-mtd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>D:/projects/Portfolio/examples/TemporalAA/Release/TemporalAA.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/projects/Portfolio/examples/TemporalAA/Release/TemporalAA.pdb</ProgramDataBaseFile>
+      <ImportLibrary>C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/Release/TemporalAA.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/Release/TemporalAA.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -171,15 +172,15 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\projects\Portfolio\examples\TemporalAA\..\..\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinywindow\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyextender\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyclock\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\imgui;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\glm;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\gli;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\assimp\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\stb;D:\projects\Portfolio\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
-      <CompileAs>CompileAsCpp</CompileAs>
+      <AdditionalIncludeDirectories>C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Dependencies;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyextender\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyclock\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\imgui;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\glm;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\gli;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\assimp\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\stb;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <Optimization>MinSpace</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -188,10 +189,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\projects\Portfolio\examples\TemporalAA\..\..\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinywindow\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyextender\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyclock\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\imgui;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\glm;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\gli;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\assimp\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\stb;D:\projects\Portfolio\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Dependencies;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyextender\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyclock\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\imgui;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\glm;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\gli;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\assimp\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\stb;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\projects\Portfolio\examples\TemporalAA\..\..\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinywindow\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyextender\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyclock\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\imgui;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\glm;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\gli;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\assimp\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\stb;D:\projects\Portfolio\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Dependencies;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyextender\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyclock\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\imgui;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\glm;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\gli;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\assimp\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\stb;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -199,13 +200,13 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>../../dependencies/assimp/lib/Debug/assimp-vc140-mt.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>../../dependencies/assimp/lib/Debug/assimp-vc142-mtd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>D:/projects/Portfolio/examples/TemporalAA/MinSizeRel/TemporalAA.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/projects/Portfolio/examples/TemporalAA/MinSizeRel/TemporalAA.pdb</ProgramDataBaseFile>
+      <ImportLibrary>C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/MinSizeRel/TemporalAA.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/MinSizeRel/TemporalAA.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -214,9 +215,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\projects\Portfolio\examples\TemporalAA\..\..\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinywindow\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyextender\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyclock\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\imgui;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\glm;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\gli;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\assimp\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\stb;D:\projects\Portfolio\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
-      <CompileAs>CompileAsCpp</CompileAs>
+      <AdditionalIncludeDirectories>C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Dependencies;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyextender\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyclock\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\imgui;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\glm;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\gli;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\assimp\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\stb;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
@@ -224,16 +224,17 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\projects\Portfolio\examples\TemporalAA\..\..\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinywindow\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyextender\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyclock\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\imgui;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\glm;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\gli;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\assimp\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\stb;D:\projects\Portfolio\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Dependencies;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyextender\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyclock\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\imgui;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\glm;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\gli;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\assimp\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\stb;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\projects\Portfolio\examples\TemporalAA\..\..\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinywindow\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyextender\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\tinyclock\Include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\imgui;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\glm;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\gli;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\assimp\include;D:\projects\Portfolio\examples\TemporalAA\..\..\dependencies\stb;D:\projects\Portfolio\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinywindow\Dependencies;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyextender\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyshaders\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\tinyclock\Include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\imgui;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\glm;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\gli;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\assimp\include;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\..\..\dependencies\stb;C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -241,13 +242,13 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>../../dependencies/assimp/lib/Debug/assimp-vc140-mt.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>../../dependencies/assimp/lib/Debug/assimp-vc142-mtd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImportLibrary>D:/projects/Portfolio/examples/TemporalAA/RelWithDebInfo/TemporalAA.lib</ImportLibrary>
-      <ProgramDataBaseFile>D:/projects/Portfolio/examples/TemporalAA/RelWithDebInfo/TemporalAA.pdb</ProgramDataBaseFile>
+      <ImportLibrary>C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/RelWithDebInfo/TemporalAA.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/RelWithDebInfo/TemporalAA.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -255,10 +256,11 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="D:\projects\Portfolio\examples\TemporalAA\CMakeLists.txt">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/projects/Portfolio/examples/TemporalAA/CMakeLists.txt</Message>
+    <CustomBuild Include="C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\CMakeLists.txt">
+      <StdOutEncoding>UTF-8</StdOutEncoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HD:/projects/Portfolio -BD:/projects/Portfolio --check-stamp-file D:/projects/Portfolio/examples/TemporalAA/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/ziyad/Documents/Temporal-AA -BC:/Users/ziyad/Documents/Temporal-AA --check-stamp-file C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -266,12 +268,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/projects/Portfolio/examples/TemporalAA/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.12\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\FindPackageMessage.cmake;D:\projects\Portfolio\examples\TemporalAA\CMakeLists.txt;D:\projects\Portfolio\examples\TemporalAA\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\projects\Portfolio\examples\TemporalAA\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.19\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageMessage.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/projects/Portfolio/examples/TemporalAA/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HD:/projects/Portfolio -BD:/projects/Portfolio --check-stamp-file D:/projects/Portfolio/examples/TemporalAA/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/ziyad/Documents/Temporal-AA -BC:/Users/ziyad/Documents/Temporal-AA --check-stamp-file C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -279,12 +281,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/projects/Portfolio/examples/TemporalAA/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.12\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\FindPackageMessage.cmake;D:\projects\Portfolio\examples\TemporalAA\CMakeLists.txt;D:\projects\Portfolio\examples\TemporalAA\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\projects\Portfolio\examples\TemporalAA\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.19\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageMessage.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/projects/Portfolio/examples/TemporalAA/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HD:/projects/Portfolio -BD:/projects/Portfolio --check-stamp-file D:/projects/Portfolio/examples/TemporalAA/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/ziyad/Documents/Temporal-AA -BC:/Users/ziyad/Documents/Temporal-AA --check-stamp-file C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -292,12 +294,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:/projects/Portfolio/examples/TemporalAA/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.12\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\FindPackageMessage.cmake;D:\projects\Portfolio\examples\TemporalAA\CMakeLists.txt;D:\projects\Portfolio\examples\TemporalAA\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\projects\Portfolio\examples\TemporalAA\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.19\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageMessage.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/projects/Portfolio/examples/TemporalAA/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -HD:/projects/Portfolio -BD:/projects/Portfolio --check-stamp-file D:/projects/Portfolio/examples/TemporalAA/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/ziyad/Documents/Temporal-AA -BC:/Users/ziyad/Documents/Temporal-AA --check-stamp-file C:/Users/ziyad/Documents/Temporal-AA/examples/TemporalAA/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -305,34 +307,36 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:/projects/Portfolio/examples/TemporalAA/CMakeLists.txt;C:\Program Files\CMake\share\cmake-3.12\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.12\Modules\FindPackageMessage.cmake;D:\projects\Portfolio\examples\TemporalAA\CMakeLists.txt;D:\projects\Portfolio\examples\TemporalAA\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\projects\Portfolio\examples\TemporalAA\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.19\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageMessage.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="D:\projects\Portfolio\examples\TemporalAA\source\TemporalAA.cpp" />
-    <ClCompile Include="D:\projects\Portfolio\dependencies\imgui\imgui.cpp" />
-    <ClCompile Include="D:\projects\Portfolio\dependencies\imgui\imgui_draw.cpp" />
-    <ClCompile Include="D:\projects\Portfolio\dependencies\imgui\imgui_demo.cpp" />
-    <ClCompile Include="D:\projects\Portfolio\dependencies\imgui\imgui_widgets.cpp" />
-    <ClInclude Include="D:\projects\Portfolio\include\Camera.h" />
-    <ClInclude Include="D:\projects\Portfolio\include\DefaultUniformBuffer.h" />
-    <ClInclude Include="D:\projects\Portfolio\include\Scene.h" />
-    <ClInclude Include="D:\projects\Portfolio\include\Texture.h" />
-    <ClInclude Include="D:\projects\Portfolio\include\TexturedScene.h" />
-    <ClInclude Include="D:\projects\Portfolio\include\UniformBuffer.h" />
-    <ClInclude Include="D:\projects\Portfolio\include\Utilities.h" />
-    <ClInclude Include="D:\projects\Portfolio\include\VertexBuffer.h" />
-    <ClInclude Include="D:\projects\Portfolio\include\Model.h" />
-    <ClInclude Include="D:\projects\Portfolio\include\FrameBuffer.h" />
-    <ClInclude Include="D:\projects\Portfolio\include\Scene3D.h" />
-    <ClInclude Include="D:\projects\Portfolio\examples\TemporalAA\include\TemporalAA.h" />
+    <ClCompile Include="C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\source\TemporalAA.cpp" />
+    <ClCompile Include="C:\Users\ziyad\Documents\Temporal-AA\dependencies\imgui\imgui.cpp" />
+    <ClCompile Include="C:\Users\ziyad\Documents\Temporal-AA\dependencies\imgui\imgui_draw.cpp" />
+    <ClCompile Include="C:\Users\ziyad\Documents\Temporal-AA\dependencies\imgui\imgui_demo.cpp" />
+    <ClCompile Include="C:\Users\ziyad\Documents\Temporal-AA\dependencies\imgui\imgui_widgets.cpp" />
+    <ClInclude Include="C:\Users\ziyad\Documents\Temporal-AA\include\Camera.h" />
+    <ClInclude Include="C:\Users\ziyad\Documents\Temporal-AA\include\DefaultUniformBuffer.h" />
+    <ClInclude Include="C:\Users\ziyad\Documents\Temporal-AA\include\Scene.h" />
+    <ClInclude Include="C:\Users\ziyad\Documents\Temporal-AA\include\Texture.h" />
+    <ClInclude Include="C:\Users\ziyad\Documents\Temporal-AA\include\TexturedScene.h" />
+    <ClInclude Include="C:\Users\ziyad\Documents\Temporal-AA\include\UniformBuffer.h" />
+    <ClInclude Include="C:\Users\ziyad\Documents\Temporal-AA\include\Utilities.h" />
+    <ClInclude Include="C:\Users\ziyad\Documents\Temporal-AA\include\VertexBuffer.h" />
+    <ClInclude Include="C:\Users\ziyad\Documents\Temporal-AA\include\Model.h" />
+    <ClInclude Include="C:\Users\ziyad\Documents\Temporal-AA\include\FrameBuffer.h" />
+    <ClInclude Include="C:\Users\ziyad\Documents\Temporal-AA\include\Scene3D.h" />
+    <ClInclude Include="C:\Users\ziyad\Documents\Temporal-AA\examples\TemporalAA\include\TemporalAA.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="D:\projects\Portfolio\ZERO_CHECK.vcxproj">
-      <Project>{CCE4BA45-45D8-38F6-A4B7-410AC25FAE5D}</Project>
+    <ProjectReference Include="C:\Users\ziyad\Documents\Temporal-AA\ZERO_CHECK.vcxproj">
+      <Project>{63AB3642-55C2-3E2D-90E0-AF5F55FE513C}</Project>
       <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

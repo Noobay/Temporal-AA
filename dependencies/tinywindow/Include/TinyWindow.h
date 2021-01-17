@@ -1,4 +1,4 @@
-//created by Ziyad Barakat 2014 - 2016
+//created by Ziyad Barakat 2014 - 2020
 
 #ifndef TINYWINDOW_H
 #define TINYWINDOW_H
@@ -10,6 +10,7 @@
 #pragma comment (lib, "opengl32.lib")
 //for gamepad support
 #pragma comment (lib, "winmm.lib")
+#pragma comment (lib, "xinput.lib")
 //this makes sure that the entry point of your program is main() not Winmain(). feel free to comment out
 #if defined(TW_NO_CONSOLE)
 #pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
@@ -32,6 +33,9 @@
 #if !defined(TW_USE_VULKAN)
 #include <gl/GL.h>
 #include <gl/wglext.h>
+#include <dinput.h>
+#include <Xinput.h>
+#include <Dbt.h>
 #else
 #include <vulkan.h>
 #endif
@@ -54,19 +58,21 @@
 #include <X11/XKBlib.h>
 #endif //__linux__
 
-#include <assert.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
 #include <vector>
-#include <limits.h>
-#include <string.h>
+#include <stack>
+#include <climits>
+#include <cstring>
 #include <functional>
 #include <memory>
 #include <system_error>
 #include <bitset>
-#include <ctype.h>
-#include <math.h>
+#include <cctype>
+#include <algorithm>
+#include <limits>
 
 namespace TinyWindow
 {
@@ -171,11 +177,10 @@ namespace TinyWindow
 		unsigned int       fixedOutput;
 #endif
 
-		monitorSetting_t(vec2_t<unsigned int> inResolution, unsigned int inBitsPerPixel, unsigned int inDisplayFrequency)	: resolution(inResolution), bitsPerPixel(inBitsPerPixel), displayFrequency(inDisplayFrequency)
+		monitorSetting_t(vec2_t<unsigned int> inResolution = vec2_t<unsigned int>().Zero(), 
+			unsigned int inBitsPerPixel = 0, unsigned int inDisplayFrequency = 0) : 
+			resolution(inResolution), bitsPerPixel(inBitsPerPixel), displayFrequency(inDisplayFrequency)
 		{
-			resolution = vec2_t<unsigned int>().Zero();
-			bitsPerPixel = 0;
-			displayFrequency = 0;
 
 #if defined(TW_WINDOWS)
 			displayFlags = 0;
@@ -191,7 +196,7 @@ namespace TinyWindow
 		//store all display settings
 
 		vec2_t<unsigned int> resolution;
-		vec4_t<int> extents;;
+		vec4_t<int> extents;
 		std::string deviceName;
 		std::string monitorName;
 		std::string displayName;
@@ -263,7 +268,7 @@ namespace TinyWindow
 		formatSetting_t(int redBits = 8, int greenBits = 8, int	blueBits = 8, int alphaBits = 8, 
 			int depthBits = 32, int stencilBits = 8, 
 			int accumRedBits = 0, int accumGreenBits = 0, int accumBlueBits = 0, int accumAplhaBits = 0, 
-			int	auxBuffers = 4, int numSamples = 0, bool stereo = false, bool doubleBuffer = true) 
+			int	auxBuffers = 0, int numSamples = 0, bool stereo = false, bool doubleBuffer = true) 
 		{
 			this->redBits = redBits;
 			this->greenBits = greenBits;
@@ -287,6 +292,68 @@ namespace TinyWindow
 			this->handle = 0;
 #endif
 		}
+	};
+
+	enum class profile_t
+	{
+		core,
+		compatibility,
+	};
+
+	enum class state_t
+	{
+		normal,									/**< The window is in its default state */
+		maximized,								/**< The window is currently maximized */
+		minimized,								/**< The window is currently minimized */
+		fullscreen,								/**< The window is currently full screen */
+	};
+
+	struct windowSetting_t
+	{
+		friend class windowManager;
+
+		windowSetting_t(const char* name = nullptr, void* userData = nullptr,
+			vec2_t<unsigned int> resolution = vec2_t<unsigned int>(defaultWindowWidth, defaultWindowHeight),
+			int versionMajor = 4, int versionMinor = 5, unsigned int colorBits = 8, unsigned int depthBits = 24, unsigned int stencilBits = 8,
+			state_t currentState = state_t::normal, profile_t profile = profile_t::core)
+		{
+			this->name = name;
+			this->resolution = resolution;
+			this->colorBits = colorBits;
+			this->depthBits = depthBits;
+			this->stencilBits = stencilBits;
+			this->currentState = currentState;
+			this->userData = userData;
+			this->versionMajor = versionMajor;
+			this->versionMinor = versionMinor;
+			this->enableSRGB = false;
+
+			SetProfile(profile);
+		}
+
+		void SetProfile(profile_t profile)
+		{
+#if defined(TW_WINDOWS) && !defined(TW_USE_VULKAN) 
+			this->profile = (profile == profile_t::compatibility) ? WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB : WGL_CONTEXT_CORE_PROFILE_BIT_ARB;
+#endif
+		}
+
+		const char*								name;													/**< Name of the window */
+		int										colorBits;												/**< Color format of the window. (defaults to 32 bit color) */
+		int										depthBits;												/**< Size of the Depth buffer. (defaults to 8 bit depth) */
+		int										stencilBits;											/**< Size of the stencil buffer, (defaults to 8 bit) */
+		TinyWindow::vec2_t<unsigned int>		resolution;												/**< Resolution/Size of the window stored in an array */
+		void*									userData;
+		state_t									currentState;											/**< The current state of the window. these states include Normal, Minimized, Maximized and Full screen */
+		bool									enableSRGB;												/**< whether the window will support an sRGB colorspace backbuffer*/
+
+#if defined(TW_WINDOWS) && !defined(TW_USE_VULKAN) 
+		GLint									versionMajor;											/**< Major OpenGL version*/
+		GLint									versionMinor;											/**< Minor OpenGL version*/
+	private:
+		GLint									profile;												/**< Compatibility or core OpenGL profiles*/
+#endif
+
 	};
 
 	enum class keyState_t
@@ -380,14 +447,6 @@ namespace TinyWindow
 		up										/**< The mouse wheel down */
 	};
 
-	enum class state_t
-	{
-		normal,									/**< The window is in its default state */
-		maximized,								/**< The window is currently maximized */
-		minimized,								/**< The window is currently minimized */
-		fullscreen,								/**< The window is currently full screen */
-	};
-
 	enum decorator_t
 	{
 		titleBar =			1L << 1,			/**< The title bar decoration of the window */
@@ -406,10 +465,88 @@ namespace TinyWindow
 		popup,									/**< The window has no decorators */
 	};
 
-	enum class profile_t
+	struct gamepad_t
 	{
-		core,
-		compatibility,
+		enum button_t
+		{
+			face_top = 0,
+			face_left,
+			face_right,
+			face_bottom,
+			start,
+			select,
+			Dpad_top, //dpad might need to be something different?
+			Dpad_left,
+			Dpad_right,
+			Dpad_bottom,
+			left_stick,
+			right_stick,
+			left_shoulder,
+			right_shoulder,
+			special1,
+			special2,
+			last = special2
+		};
+
+		gamepad_t()
+		{
+			buttonStates.resize(last, false);
+
+			leftStick = std::vector<float>{ 0, 0 };
+			rightStick = std::vector<float>{ 0, 0 };
+
+			leftTrigger = 0;
+			rightTrigger = 0;
+		}
+
+		float leftTrigger;
+		float rightTrigger;
+
+		std::vector<float> leftStick;
+		std::vector<float> rightStick;
+
+		std::vector<bool> buttonStates;
+
+		bool isWireless; //does X11 even pick up any of this shit?
+
+		unsigned short ID; //how to make this a more dynamic ID system for hot-plugging?
+
+		//we need face buttons
+		//we need triggers
+		//we need the axis buttons as well
+
+		//a vector of bools for buttons with each button being an index?
+
+		//ok get and set the dead zones for each axis of the sticks and the 
+		//deadzones for triggers
+		//
+
+		//clamped between 0-1
+		/*void vibrate(float strength)
+		{
+			//
+
+			//get the maximum vibration of that controller
+			//lerp between the min and max? inverse lerp
+			std::clamp<float>(strength, 0.0f, 1.0f);
+			short vibrateStrength = 0;
+			vibrateStrength = Lerp<short>(0, leftMotor, vibrateStrength);
+
+		}*/
+
+	private:
+
+#if defined(TW_WINDOWS)
+
+		short leftMotor;
+		short rightMotor;
+#endif
+
+		template<typename t> inline t Lerp(t first, t second, t delta)
+		{
+			return (1 - delta) * first + delta * second;
+		}
+
 	};
 
 	enum class error_t
@@ -434,19 +571,27 @@ namespace TinyWindow
 		fullscreenFailed,						/**< If setting the window to fullscreen has failed */
 		noExtensions,							/**< If platform specific window extensions have not been properly loaded */
 		invalidExtension,						/**< If a platform specific window extension is not supported */
-		invalidDummyWindow,                     /**< If the dummy window creation has failed */
+		invalidDummyWindow,						/**< If the dummy window creation has failed */
 		invalidDummyPixelFormat,				/**< If the pixel format for the dummy context id invalid */
 		dummyCreationFailed,					/**< If the dummy context has failed to be created */
 		invalidDummyContext,					/**< If the dummy context in invalid */
 		dummyCannotMakeCurrent,					/**< If the dummy cannot be made the current context */
+		invalidMonitorSettingIndex,				/**< If the provided monitor setting index is invalid */
 		functionNotImplemented,					/**< If the function has not yet been implemented in the current version of the API */
-		linuxCannotConnectXServer,				/**< Linux: if cannot connect to an X11 server */
-		linuxInvalidVisualinfo,					/**< Linux: if visual information given was invalid */
-		linuxCannotCreateWindow,				/**< Linux: when X11 fails to create a new window */
-		linuxFunctionNotImplemented,			/**< Linux: when the function has not yet been implemented on the Linux in the current version of the API */
-		windowsCannotCreateWindows,				/**< Windows: when Win32 cannot create a window */
-		windowsCannotInitialize,				/**< Windows: when Win32 cannot initialize */
-		windowsFunctionNotImplemented,			/**< Windows: when a function has yet to be implemented on the Windows platform in the current version of the API */
+		linuxCannotConnectXServer,				/**< Linux: If cannot connect to an X11 server */
+		linuxInvalidVisualinfo,					/**< Linux: If visual information given was invalid */
+		linuxCannotCreateWindow,				/**< Linux: When X11 fails to create a new window */
+		linuxFunctionNotImplemented,			/**< Linux: When the function has not yet been implemented on the Linux in the current version of the API */
+		windowsCannotCreateWindows,				/**< Windows: When Win32 cannot create a window */
+		windowsCannotInitialize,				/**< Windows: When Win32 cannot initialize */
+		windowsFullscreenBadDualView,			/**< Windows: The system is DualView capable. whatever that means */
+		windowsFullscreenBadFlags,				/**< Windows: Bad display change flags */
+		windowsFullscreenBadMode,				/**< Windows: Bad display change mode */
+		WindowsFullscreenBadParam,				/**< Windows: Bad display change Parameter */
+		WindowsFullscreenChangeFailed,			/**< Windows: The display driver failed to implement the specified graphics mode */
+		WindowsFullscreenNotUpdated,			/**< Windows: Unable to write settings to the registry */
+		WindowsFullscreenNeedRestart,			/**< Windows: The computer must be restarted for the graphics mode to work */
+		windowsFunctionNotImplemented,			/**< Windows: When a function has yet to be implemented on the Windows platform in the current version of the API */
 	};
 
 	using keyEvent_t = std::function<void(tWindow* window, int key, keyState_t keyState)>;
@@ -473,7 +618,7 @@ namespace TinyWindow
 		/**
 		* return the error message associated with the given error number
 		*/
-		virtual std::string message(int errorValue) const override
+		std::string message(int errorValue) const override
 		{
 			error_t err = (error_t)errorValue;
 			switch (err)
@@ -598,29 +743,69 @@ namespace TinyWindow
 					return "Error: the dummy cannot be made the current context \n";
 				}
 
+				case error_t::invalidMonitorSettingIndex:
+				{
+					return "Error: the provided monitor setting index is invalid \n";
+				}
+
 				case error_t::linuxCannotConnectXServer:
 				{
-					return "Error: cannot connect to X server \n";
+					return "Linux Error: cannot connect to X server \n";
 				}
 
 				case error_t::linuxInvalidVisualinfo:
 				{
-					return "Error: Invalid visual information given \n";
+					return "Linux Error: Invalid visual information given \n";
 				}
 
 				case error_t::linuxCannotCreateWindow:
 				{
-					return "Error: failed to create window \n";
+					return "Linux Error: failed to create window \n";
 				}
 
 				case error_t::linuxFunctionNotImplemented:
 				{
-					return "Error: function not implemented on Linux platform yet. sorry :(\n";
+					return "Linux Error: function not implemented on Linux platform yet. sorry :(\n";
 				}
 
 				case error_t::windowsCannotCreateWindows:
 				{
-					return "Error: failed to create window \n";
+					return "Windows Error: failed to create window \n";
+				}
+
+				case error_t::windowsFullscreenBadDualView:
+				{
+					return "Windows Error: The system is DualView capable. whatever that means \n";
+				}
+
+				case error_t::windowsFullscreenBadFlags:
+				{
+					return "Windows Error: Bad display change flags \n";
+				}
+
+				case error_t::windowsFullscreenBadMode:
+				{
+					return "Windows Error: Bad display change mode \n";
+				}
+				
+				case error_t::WindowsFullscreenBadParam:
+				{
+					return "Windows Error: Bad display change Parameter \n";
+				}
+
+				case error_t::WindowsFullscreenChangeFailed:
+				{
+					return "Windows Error: The display driver failed to implement the specified graphics mode \n";
+				}
+
+				case error_t::WindowsFullscreenNotUpdated:
+				{
+					return "Windows Error: Unable to write settings to the registry \n";
+				}
+
+				case error_t::WindowsFullscreenNeedRestart:
+				{
+					return "Windows Error: The computer must be restarted for the graphics mode to work \n";
 				}
 
 				case error_t::windowsFunctionNotImplemented:
@@ -640,7 +825,7 @@ namespace TinyWindow
 			}
 		}
 		
-		errorCategory_t() {};
+		errorCategory_t() = default;
 
 		const static errorCategory_t& get()
 		{
@@ -680,13 +865,9 @@ namespace TinyWindow
 
 	public:
 
-		const char*								name;													/**< Name of the window */
-		int										colorBits;												/**< Color format of the window. (defaults to 32 bit color) */
-		int										depthBits;												/**< Size of the Depth buffer. (defaults to 8 bit depth) */
-		int										stencilBits;											/**< Size of the stencil buffer, (defaults to 8 bit) */
+		windowSetting_t							settings;												/**< List of User-defined settings for this windowS */
 		keyState_t								keys[last];												/**< Record of keys that are either pressed or released in the respective window */
 		buttonState_t							mouseButton[(unsigned int)mouseButton_t::last];			/**< Record of mouse buttons that are either presses or released */
-		TinyWindow::vec2_t<unsigned int>		resolution;												/**< Resolution/Size of the window stored in an array */
 		TinyWindow::vec2_t<int>					position;												/**< Position of the Window relative to the screen co-ordinates */
 		TinyWindow::vec2_t<int>					mousePosition;											/**< Position of the Mouse cursor relative to the window co-ordinates */
 		TinyWindow::vec2_t<int>					previousMousePosition;
@@ -695,10 +876,9 @@ namespace TinyWindow
 		bool									initialized;											/**< Whether the window has been successfully initialized */
 		bool									contextCreated;											/**< Whether the OpenGL context has been successfully created */
 		bool									isCurrentContext;										/**< Whether the window is the current window being drawn to */
-		state_t									currentState;											/**< The current state of the window. these states include Normal, Minimized, Maximized and Full screen */
 		unsigned int							currentStyle;											/**< The current style of the window */
 
-		void*									userData;
+
 		unsigned int							currentScreenIndex;										/**< The Index of the screen currently being rendered to (fullscreen)*/
 		bool									isFullscreen;											/**< Whether the window is currently in fullscreen mode */
 		TinyWindow::monitor_t*					currentMonitor;											/**< The monitor that the window is currently rendering to */
@@ -708,11 +888,6 @@ namespace TinyWindow
 #if defined(TW_USE_VULKAN)
 		VkInstance								vulkanInstanceHandle;
 		VkSurfaceKHR							vulkanSurfaceHandle;
-
-#else
-		GLint									versionMajor;
-		GLint									versionMinor;
-		GLint									profile;
 #endif
 
 #if defined(TW_WINDOWS)
@@ -725,6 +900,8 @@ namespace TinyWindow
 		HWND									windowHandle;											/**< A handle to A window */
 		HINSTANCE								instanceHandle;											/**< A handle to the window class instance */
 		int										accumWheelDelta;										/**< holds the accumulated mouse wheel delta for this window */
+
+		vec2_t<unsigned int>					clientArea;												/**< the width and height of the client window */
 
 #elif defined(TW_LINUX)
 
@@ -814,22 +991,11 @@ namespace TinyWindow
 
 	public:
 
-		tWindow(const char* name = nullptr, void* userData = nullptr,
-			vec2_t<unsigned int> resolution = vec2_t<unsigned int>(defaultWindowWidth, defaultWindowHeight),
-			int versionMajor = 4, int versionMinor = 5, profile_t profile = profile_t::core,
-			unsigned int colorBits = 8, unsigned int depthBits = 24, unsigned int stencilBits = 8,
-			state_t currentState = state_t::normal)
+		tWindow(windowSetting_t windowSetting)
 		{
-			this->name = name;
-			this->resolution = resolution;
-			this->colorBits = colorBits;
-			this->depthBits = depthBits;
-			this->stencilBits = stencilBits;
+			this->settings = windowSetting;
+
 			this->shouldClose = false;
-			this->currentState = currentState;
-			this->userData = userData;
-			this->versionMajor = versionMajor;
-			this->versionMinor = versionMinor;
 
 			initialized = false;
 			contextCreated = false;
@@ -853,7 +1019,7 @@ namespace TinyWindow
 			windowHandle = nullptr;
 			instanceHandle = nullptr;
 			accumWheelDelta = 0;
-			this->profile = (profile == profile_t::compatibility) ? WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB : WGL_CONTEXT_CORE_PROFILE_BIT_ARB;
+			clientArea = vec2_t<unsigned int>::Zero();
 #endif
 			
 #if defined(__linux__)
@@ -861,59 +1027,12 @@ namespace TinyWindow
 #endif 
 		}
 
-		tWindow(tWindow* sourceWindow, const char* name = nullptr, void* userData = nullptr,
-			vec2_t<unsigned int> resolution = vec2_t<unsigned int>(defaultWindowWidth, defaultWindowHeight))
-		{
-			if (sourceWindow)
-			{
-				this->name = name;
-				this->resolution = resolution;
-				this->colorBits = sourceWindow->colorBits;
-				this->depthBits = sourceWindow->depthBits;
-				this->stencilBits = sourceWindow->stencilBits;
-				this->shouldClose = false;
-				this->currentState = sourceWindow->currentState;
-				this->userData = userData;
-				this->versionMajor = sourceWindow->versionMajor;
-				this->versionMinor = sourceWindow->versionMinor;
-
-				initialized = false;
-				contextCreated = false;
-				currentStyle = sourceWindow->currentStyle;
-
-				std::fill(keys, keys + last, keyState_t::up);// = { keyState_t.bad };
-				std::fill(mouseButton, mouseButton + (unsigned int)mouseButton_t::last, buttonState_t::up);
-
-				inFocus = false;
-				isCurrentContext = false;
-				currentScreenIndex = 0;
-				isFullscreen = false;
-				currentMonitor = nullptr;
-
-#if defined(TW_WINDOWS)
-				this->profile = sourceWindow->profile;
-				deviceContextHandle = nullptr;
-				glRenderingContextHandle = nullptr;
-				paletteHandle = nullptr;
-				pixelFormatDescriptor = PIXELFORMATDESCRIPTOR();
-				windowClass = WNDCLASS();
-				windowHandle = nullptr;
-				instanceHandle = nullptr;
-				accumWheelDelta = 0;
-#endif
-
-#if defined(__linux__)
-				context = 0;
-#endif
-			}
-		}
-
 		/**
 		* Set the Size/Resolution of the given window
 		*/
 		std::error_code SetWindowSize(TinyWindow::vec2_t<unsigned int> newResolution)
 		{
-			this->resolution = newResolution;
+			this->settings.resolution = newResolution;
 #if defined(TW_WINDOWS)
 			SetWindowPos(windowHandle, HWND_TOP,
 				position.x, position.y,
@@ -935,7 +1054,7 @@ namespace TinyWindow
 
 #if defined(TW_WINDOWS)
 			SetWindowPos(windowHandle, HWND_TOP, newPosition.x, newPosition.y,
-				resolution.x, resolution.y,
+				settings.resolution.x, settings.resolution.y,
 				SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
 #elif defined(TW_LINUX)
 			XWindowChanges windowChanges;
@@ -1022,7 +1141,7 @@ namespace TinyWindow
 		{
 			if (newState)
 			{
-				currentState = state_t::minimized;
+				settings.currentState = state_t::minimized;
 
 #if defined(TW_WINDOWS)
 				ShowWindow(windowHandle, SW_MINIMIZE);
@@ -1034,7 +1153,7 @@ namespace TinyWindow
 
 			else
 			{
-				currentState = state_t::normal;
+				settings.currentState = state_t::normal;
 #if defined(TW_WINDOWS)
 				ShowWindow(windowHandle, SW_RESTORE);
 #elif defined(TW_LINUX)
@@ -1051,7 +1170,7 @@ namespace TinyWindow
 		{
 			if (newState)
 			{
-				currentState = state_t::maximized;
+				settings.currentState = state_t::maximized;
 #if defined(TW_WINDOWS)
 				ShowWindow(windowHandle, SW_MAXIMIZE);
 #elif defined(TW_LINUX)
@@ -1074,7 +1193,7 @@ namespace TinyWindow
 
 			else
 			{
-				currentState = state_t::normal;
+				settings.currentState = state_t::normal;
 #if defined(TW_WINDOWS)
 				ShowWindow(windowHandle, SW_RESTORE);
 #elif defined(TW_LINUX)
@@ -1099,9 +1218,9 @@ namespace TinyWindow
 		/**
 		* Toggle the given window's full screen mode
 		*/
-		std::error_code SetFullScreen(bool newState)
+		std::error_code SetFullScreen(bool newState /* need to add definition for which screen*/)
 		{
-			currentState = (newState == true) ? state_t::fullscreen : state_t::normal;
+			settings.currentState = (newState == true) ? state_t::fullscreen : state_t::normal;
 
 #if defined(TW_WINDOWS)
 
@@ -1128,6 +1247,18 @@ namespace TinyWindow
 				0, SubstructureNotifyMask, &currentEvent);
 #endif
 			return TinyWindow::error_t::success;
+		}
+
+		/**
+		* Toggles full-screen mode for a window by parsing in a monitor and a monitor setting index
+		*/
+		std::error_code ToggleFullscreen(monitor_t* monitor, unsigned int monitorSettingIndex)
+		{
+#if defined(TW_WINDOWS)
+			return Windows_ToggleFullscreen(monitor, monitorSettingIndex);
+#elif defined(TW_LINUX)
+			return error_t::functionNotImplemented;
+#endif
 		}
 
 		/**
@@ -1324,7 +1455,7 @@ namespace TinyWindow
 
 			SetWindowLongPtr(windowHandle, GWL_STYLE, static_cast<LONG_PTR>(currentStyle));
 			SetWindowPos(windowHandle, HWND_TOP, position.x, position.y,
-				resolution.width, resolution.height, SWP_FRAMECHANGED);
+				settings.resolution.width, settings.resolution.height, SWP_FRAMECHANGED);
 
 #elif defined(TW_LINUX)
 
@@ -1415,14 +1546,14 @@ namespace TinyWindow
 
 			if (decorators & sizeableBorder)
 			{
-				currentStyle &= ~WS_SIZEBOX;
+				currentStyle &= ~WS_THICKFRAME;
 			}
 
 			SetWindowLongPtr(windowHandle, GWL_STYLE,
 				static_cast<LONG_PTR>(currentStyle | WS_VISIBLE));
 
 			SetWindowPos(windowHandle, HWND_TOPMOST, position.x, position.y,
-				resolution.width, resolution.height, SWP_FRAMECHANGED);
+				settings.resolution.width, settings.resolution.height, SWP_FRAMECHANGED);
 #elif defined(TW_LINUX)
 			if (decorators & closeButton)
 			{
@@ -1511,73 +1642,6 @@ namespace TinyWindow
 			return TinyWindow::error_t::success;
 		}
 
-		/**
-		* Toggles full-screen mode for a window by parsing in a monitor
-		*/
-		std::error_code ToggleFullscreen(monitor_t* monitor)
-		{
-#if defined(TW_WINDOWS)
-			currentMonitor = monitor;
-
-			DEVMODE devMode;
-			ZeroMemory(&devMode, sizeof(DEVMODE));
-			devMode.dmSize = sizeof(DEVMODE);
-			int err = 0;
-			if (isFullscreen)
-			{
-				err = ChangeDisplaySettingsEx(currentMonitor->displayName.c_str(), nullptr, nullptr, CDS_FULLSCREEN, nullptr);
-			}
-
-			else
-			{
-				devMode.dmPelsWidth = resolution.width;
-				devMode.dmPelsHeight = resolution.height;
-				devMode.dmBitsPerPel = colorBits * 4;
-				devMode.dmFields = DM_PELSWIDTH | DM_PELSHEIGHT | DM_BITSPERPEL;
-				err = ChangeDisplaySettingsEx(currentMonitor->displayName.c_str(), &devMode, nullptr, CDS_FULLSCREEN, nullptr);
-			}
-
-			switch (err)
-			{
-				case DISP_CHANGE_SUCCESSFUL:
-				{
-					isFullscreen = !isFullscreen;
-					if (isFullscreen)
-					{
-						SetStyle(style_t::popup);
-					}
-
-					else
-					{
-						SetStyle(style_t::normal);
-					}
-
-					break;
-				}
-
-				case DISP_CHANGE_BADDUALVIEW:
-				case DISP_CHANGE_BADFLAGS:
-				case DISP_CHANGE_BADMODE:
-				case DISP_CHANGE_BADPARAM:
-				case DISP_CHANGE_FAILED:
-				case DISP_CHANGE_NOTUPDATED:
-				{
-					return error_t::fullscreenFailed;
-				}
-
-				default:
-				{
-					break;
-				}
-			}
-
-			SetPosition(vec2_t<int>((int)monitor->extents.left, (int)monitor->extents.top));
-			return error_t::success;
-			#elif defined(TW_LINUX)
-			return error_t::functionNotImplemented;
-			#endif
-		}
-
 		//if windows is defined then allow the user to only GET the necessary info
 #if defined(TW_WINDOWS)
 
@@ -1599,6 +1663,85 @@ namespace TinyWindow
 		inline HINSTANCE GetWindowClassInstance()
 		{
 			return instanceHandle;
+		}
+
+		std::error_code Windows_ToggleFullscreen(monitor_t* monitor, unsigned int monitorSettingIndex)
+		{
+			currentMonitor = monitor;
+
+			DEVMODE devMode;
+			ZeroMemory(&devMode, sizeof(DEVMODE));
+			devMode.dmSize = sizeof(DEVMODE);
+			int err = 0;
+			if (isFullscreen)
+			{
+				err = ChangeDisplaySettingsEx(currentMonitor->displayName.c_str(), nullptr, nullptr, CDS_FULLSCREEN, nullptr);
+			}
+
+			else
+			{
+				if (monitorSettingIndex < (monitor->settings.size() - 1))
+				{
+					monitorSetting_t* selectedSetting = monitor->settings[monitorSettingIndex];
+					devMode.dmPelsWidth = selectedSetting->resolution.width;
+					devMode.dmPelsHeight = selectedSetting->resolution.height;
+					devMode.dmBitsPerPel = settings.colorBits * 4;
+					devMode.dmDisplayFrequency = selectedSetting->displayFrequency;
+					devMode.dmFields = DM_PELSWIDTH | DM_PELSHEIGHT | DM_BITSPERPEL | DM_DISPLAYFREQUENCY;
+					err = ChangeDisplaySettingsEx(currentMonitor->displayName.c_str(), &devMode, nullptr, CDS_FULLSCREEN, nullptr);
+				}
+				else
+				{
+					return error_t::invalidMonitorSettingIndex;
+				}
+			}
+
+			switch (err)
+			{
+			case DISP_CHANGE_SUCCESSFUL:
+			{
+				isFullscreen = !isFullscreen;
+				if (isFullscreen)
+				{
+					SetStyle(style_t::popup);
+				}
+
+				else
+				{
+					SetStyle(style_t::normal);
+				}
+
+				break;
+			}
+
+			case DISP_CHANGE_BADDUALVIEW:
+			{
+				return error_t::windowsFullscreenBadDualView;
+			}
+			case DISP_CHANGE_BADFLAGS:
+			{
+				return error_t::windowsFullscreenBadFlags;
+			}
+			case DISP_CHANGE_BADMODE:
+			{
+				return error_t::windowsFullscreenBadMode;
+			}
+			case DISP_CHANGE_BADPARAM:
+			{
+				return error_t::WindowsFullscreenBadParam;
+			}
+			case DISP_CHANGE_FAILED:
+			{
+				return error_t::WindowsFullscreenChangeFailed;
+			}
+			case DISP_CHANGE_NOTUPDATED:
+			{
+				return error_t::WindowsFullscreenNotUpdated;
+			}
+			}
+
+			SetPosition(vec2_t<int>((int)monitor->extents.left, (int)monitor->extents.top));
+			return error_t::success;
 		}
 
 #elif defined(TW_LINUX)
@@ -1647,9 +1790,9 @@ namespace TinyWindow
 			if (desktopHandle)
 			{
 				bestPixelFormat = nullptr;
-				Platform_GetScreenInfo();
-				Platform_CreateDummyContext();
-				if (Platform_InitExtensions() == error_t::success)
+				GetScreenInfo();
+				CreateDummyContext();
+				if (InitExtensions() == error_t::success)
 				{
 					//delete the dummy context and make the current context null
 					wglMakeCurrent(dummyDeviceContextHandle, nullptr);
@@ -1662,6 +1805,9 @@ namespace TinyWindow
 				{
 					//dummy context has failed so you must use older WGL/openGL methods
 				}
+
+				gamepadList.resize(4, nullptr);
+				Windows_InitGamepad();
 			}
 	#elif defined(TW_LINUX)
 			currentDisplay = XOpenDisplay(0);
@@ -1679,6 +1825,8 @@ namespace TinyWindow
 				XScreenOfDisplay(currentDisplay,
 					DefaultScreen(currentDisplay)));*/
 	#endif
+
+
 		}
 
 		/**
@@ -1696,10 +1844,12 @@ namespace TinyWindow
 		 void ShutDown()
 		 {
 			//windowList.empty();
-	#if defined(__linux__)
+	#if defined(TW_WINDOWS)
+			 ResetMonitors();
+	#elif defined(TW_LINUX)
 			Linux_Shutdown();
 	#endif
-
+			
 			for (auto & windowIndex : windowList)
 			{
 				ShutdownWindow(windowIndex.get());
@@ -1710,32 +1860,27 @@ namespace TinyWindow
 		/**
 		 * Use this to add a window to the manager. returns a pointer to the manager which allows for the easy creation of multiple windows
 		 */
-		tWindow* AddWindow(const char* windowName, void* userData = nullptr, 
-			vec2_t<unsigned int> const &resolution = vec2_t<unsigned int>(defaultWindowWidth, defaultWindowHeight),
-			int glMajor = 4, int glMinor = 5, profile_t profile = profile_t::compatibility,
-			int colourBits = 8, int depthBits = 24, int stencilBits = 8)
+		tWindow* AddWindow(windowSetting_t windowSetting)
 		{
-			if (windowName != nullptr)
+			if (windowSetting.name != nullptr)
 			{
-				std::unique_ptr<tWindow> newWindow(new tWindow(windowName, userData, resolution, glMajor, glMinor, profile, colourBits, depthBits, stencilBits));
+				std::unique_ptr<tWindow> newWindow(new tWindow(windowSetting));
 				windowList.push_back(std::move(newWindow));
-				Platform_InitializeWindow(windowList.back().get());
+				InitializeWindow(windowList.back().get());
 
 				return windowList.back().get();
 			}
-			//PrintErrorMessage(std::error_code(invalidWindowName));
 			return nullptr;
 		}
 
-		tWindow* AddSharedWindow(tWindow* sourceWindow, const char* windowName, void* userData = nullptr,
-			vec2_t<unsigned int> const& resolution = vec2_t<unsigned int>(defaultWindowWidth, defaultWindowHeight))
+		tWindow* AddSharedWindow(tWindow* sourceWindow, windowSetting_t windowSetting)
 		{
-			if (windowName != nullptr)
+			if (windowSetting.name != nullptr)
 			{
-				std::unique_ptr<tWindow> newWindow(new tWindow(sourceWindow, windowName, userData, resolution));
+				std::unique_ptr<tWindow> newWindow(new tWindow(windowSetting));
 				windowList.push_back(std::move(newWindow));
-				Platform_InitializeWindow(windowList.back().get());
-				Platform_ShareContexts(sourceWindow, windowList.back().get());
+				InitializeWindow(windowList.back().get());
+				ShareContexts(sourceWindow, windowList.back().get());
 
 				return windowList.back().get();
 			}
@@ -1778,24 +1923,6 @@ namespace TinyWindow
 		}
 
 		/**
-		* Return the Resolution of the current screen
-		*/
-		/*TinyWindow::vec2_t<unsigned int> GetScreenResolution()
-		{
-	#if defined(TW_WINDOWS)
-			RECT screen;
-			HWND desktop = GetDesktopWindow();
-			GetWindowRect(desktop, &screen);
-			screenResolution.width = screen.right;
-			screenResolution.height = screen.bottom;
-	#elif defined(TW_LINUX)
-			screenResolution.width = WidthOfScreen(XDefaultScreenOfDisplay(currentDisplay));
-			screenResolution.height = HeightOfScreen(XDefaultScreenOfDisplay(currentDisplay));
-	#endif
-			return screenResolution;
-		}*/
-
-		/**
 		* Ask the window manager to poll for events
 		*/
 		inline void PollForEvents()
@@ -1821,6 +1948,10 @@ namespace TinyWindow
 				Linux_ProcessEvents(currentEvent);
 			}
 	#endif
+
+#if !defined(TW_NO_GAMEPAD_POLL)
+			PollGamepads();
+#endif
 		}
 
 		/**
@@ -1904,9 +2035,20 @@ namespace TinyWindow
 
 		}
 
+		/**
+		*	get the list of monitors connected to the system
+		*/
 		std::vector<monitor_t*> GetMonitors()
 		{
 			return monitorList;
+		}
+
+		/**
+		*	get the list of gamepad states connected to the system
+		*/
+		std::vector<gamepad_t*> GetGamepads()
+		{
+			return gamepadList;
 		}
 
 	private:
@@ -1914,11 +2056,11 @@ namespace TinyWindow
 		std::vector<std::unique_ptr<tWindow>>		windowList;
 		std::vector<monitor_t*>						monitorList;
 		std::vector<formatSetting_t*>				formatList;
+		std::vector<gamepad_t*>						gamepadList;
 
-		//TinyWindow::vec2_t<unsigned int>			screenResolution;
 		TinyWindow::vec2_t<int>						screenMousePosition;
 
-		std::error_code Platform_CreateDummyContext()
+		std::error_code CreateDummyContext()
 		{
 #if defined(TW_WINDOWS)
 			return Windows_CreateDummyContext();
@@ -1927,37 +2069,16 @@ namespace TinyWindow
 #endif // 
 		}
 
-		std::error_code Platform_InitExtensions()
+		std::error_code InitExtensions()
 		{
 #if defined(TW_WINDOWS)
-			wglGetExtensionsStringARB = (PFNWGLGETEXTENSIONSSTRINGARBPROC)wglGetProcAddress("wglGetExtensionsStringARB");
-			wglGetExtensionsStringEXT = (PFNWGLGETEXTENSIONSSTRINGEXTPROC)wglGetProcAddress("wglGetExtensionsStringEXT");
-			if (wglGetExtensionsStringARB == nullptr && wglGetExtensionsStringEXT == nullptr)
-			{
-				return error_t::noExtensions;
-				
-			}
-			wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC)wglGetProcAddress("wglChoosePixelFormatARB");	
-			wglChoosePixelFormatEXT = (PFNWGLCHOOSEPIXELFORMATEXTPROC)wglGetProcAddress("wglChoosePixelFormatEXT");	 
-			wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)wglGetProcAddress("wglCreateContextAttribsARB");			
-			wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");	
-			wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC)wglGetProcAddress("wglGetSwapIntervalEXT");
-
-			swapControlEXT = Windows_ExtensionSupported("WGL_EXT_swap_control");
-
-			wglGetPixelFormatAttribfvARB = (PFNWGLGETPIXELFORMATATTRIBFVARBPROC)wglGetProcAddress("wglGetPixelFormatAttribfvARB");
-			wglGetPixelFormatAttribfvEXT = (PFNWGLGETPIXELFORMATATTRIBFVEXTPROC)wglGetProcAddress("wglGetPixelFormatAttribfvEXT");
-			wglGetPixelFormatAttribivARB = (PFNWGLGETPIXELFORMATATTRIBIVARBPROC)wglGetProcAddress("wglGetPixelFormatAttribivARB");
-			wglGetPixelFormatAttribivEXT = (PFNWGLGETPIXELFORMATATTRIBIVEXTPROC)wglGetProcAddress("wglGetPixelFormatAttribivEXT");
-
-			
+			return Windows_InitExtensions();			
 #elif defined(TW_LINUX)
-
+			return error_t::linuxFunctionNotImplemented;
 #endif
-			return error_t::success;
 		}
 
-		void Platform_InitializeWindow(tWindow* window)
+		void InitializeWindow(tWindow* window)
 		{
 	#if defined(TW_WINDOWS)
 			Windows_InitializeWindow(window);
@@ -1966,88 +2087,16 @@ namespace TinyWindow
 	#endif
 		}
 
-		std::error_code Platform_InitializeGL(tWindow* window)
+		std::error_code InitializeGL(tWindow* window)
 		{
 #if defined(TW_WINDOWS)
-			window->deviceContextHandle = GetDC(window->windowHandle);
-			InitializePixelFormat(window);
-			if (wglCreateContextAttribsARB)
-			{
-				int attribs[]
-				{
-					WGL_CONTEXT_MAJOR_VERSION_ARB, window->versionMajor,
-					WGL_CONTEXT_MINOR_VERSION_ARB, window->versionMinor,
-					WGL_CONTEXT_PROFILE_MASK_ARB, window->profile,
-	#if defined(_DEBUG)
-					WGL_CONTEXT_FLAGS_ARB, WGL_CONTEXT_DEBUG_BIT_ARB,
-	#endif
-					0
-				};
-
-				window->glRenderingContextHandle = wglCreateContextAttribsARB(window->deviceContextHandle, nullptr, attribs);
-
-				if (window->glRenderingContextHandle == nullptr)
-				{
-					switch (GetLastError())
-					{
-					case ERROR_INVALID_VERSION_ARB:
-					{
-						return TinyWindow::error_t::invalidVersion;
-					}
-
-					case ERROR_INVALID_PROFILE_ARB:
-					{
-						return TinyWindow::error_t::invalidProfile;
-					}
-					}
-				}
-			}
-
-			else
-			{
-				//use the old fashion method if the extensions aren't loading
-				window->glRenderingContextHandle = wglCreateContext(window->deviceContextHandle);
-			}
-
-			wglMakeCurrent(window->deviceContextHandle, window->glRenderingContextHandle);
-
-			window->contextCreated = (window->glRenderingContextHandle != nullptr);
-
-			if (window->contextCreated)
-			{
-				return TinyWindow::error_t::success;
-			}
-
-			return TinyWindow::error_t::invalidContext;
+			return Windows_InitGL(window);
 #elif defined(TW_LINUX)
-				window->context = glXCreateContext(
-					currentDisplay,
-					window->visualInfo,
-					0,
-					true);
-
-				if (window->context)
-				{
-					glXMakeCurrent(currentDisplay,
-						window->windowHandle,
-						window->context);
-
-					XWindowAttributes l_Attributes;
-
-					XGetWindowAttributes(currentDisplay,
-						window->windowHandle, &l_Attributes);
-					window->position.x = l_Attributes.x;
-					window->position.y = l_Attributes.y;
-
-					window->contextCreated = true;
-					window->InitializeAtoms();
-					return TinyWindow::error_t::success;
-				}
-				return TinyWindow::error_t::linuxCannotConnectXServer;
+			return Linux_InitGL(window);
 	#endif
 		}
 
-		void Platform_GetScreenInfo()
+		void GetScreenInfo()
 		{
 #if defined(TW_WINDOWS)
 			Windows_GetScreenInfo();
@@ -2070,27 +2119,6 @@ namespace TinyWindow
 #endif
 		}
 
-		void ShutdownDummy()
-		{
-	#if defined(TW_WINDOWS)
-			if (dummyGLContextHandle)
-			{
-				wglMakeCurrent(nullptr, nullptr);
-				wglDeleteContext(dummyGLContextHandle);
-			}
-
-			ReleaseDC(dummyWindowHandle, dummyDeviceContextHandle);
-			UnregisterClass("dummy", dummyWindowInstance);
-
-			FreeModule(dummyWindowInstance);
-
-			dummyDeviceContextHandle = nullptr;
-			dummyWindowHandle = nullptr;
-			dummyGLContextHandle = nullptr;
-
-	#endif
-		}
-
 		void ShutdownWindow(tWindow* window)
 		{
 			if (destroyedEvent != nullptr)
@@ -2110,7 +2138,7 @@ namespace TinyWindow
 				DeleteObject(window->paletteHandle);
 			}
 			ReleaseDC(window->windowHandle, window->deviceContextHandle);
-			UnregisterClass(window->name, window->instanceHandle);
+			UnregisterClass(window->settings.name, window->instanceHandle);
 
 			FreeModule(window->instanceHandle);
 
@@ -2142,10 +2170,28 @@ namespace TinyWindow
 			}
 		}
 
-		void Platform_ShareContexts(tWindow* sourceWindow, tWindow* newWindow)
+		void ShareContexts(tWindow* sourceWindow, tWindow* newWindow)
 		{
 #if defined(TW_WINDOWS)
-			wglShareLists(sourceWindow->glRenderingContextHandle, newWindow->glRenderingContextHandle);
+			Windows_ShareContexts(sourceWindow, newWindow);
+#elif defined(TW_LINUX)
+			//TODO: need to implement shared context functionality
+#endif
+		}
+
+		void ResetMonitors()
+		{
+#if defined(TW_WINDOWS)
+			Windows_ResetMonitors();
+#elif defined(TW_LINUX)
+
+#endif
+		}
+
+		void PollGamepads()
+		{
+#if defined(TW_WINDOWS)
+			Windows_PollGamepads();
 #elif defined(TW_LINUX)
 
 #endif
@@ -2154,11 +2200,11 @@ namespace TinyWindow
 #if defined(TW_WINDOWS)
 
 		MSG											winMessage;
-		HWND                                        dummyWindowHandle;
+		HWND										dummyWindowHandle;
 		HGLRC										dummyGLContextHandle;			/**< A handle to the dummy OpenGL rendering context*/
 		HDC											dummyDeviceContextHandle;
 		
-		HINSTANCE                                   dummyWindowInstance;
+		HINSTANCE									dummyWindowInstance;
 		//wgl extensions
 		PFNWGLGETEXTENSIONSSTRINGARBPROC			wglGetExtensionsStringARB;
 		PFNWGLGETEXTENSIONSSTRINGEXTPROC			wglGetExtensionsStringEXT;
@@ -2173,6 +2219,7 @@ namespace TinyWindow
 		PFNWGLGETPIXELFORMATATTRIBIVEXTPROC			wglGetPixelFormatAttribivEXT;
 
 		bool										swapControlEXT;
+		bool										wglFramebufferSRGBCapableARB;
 
 		formatSetting_t*							bestPixelFormat;
 
@@ -2235,8 +2282,18 @@ namespace TinyWindow
 
 				case WM_SIZE:
 				{
-					window->resolution.width = (unsigned int)LOWORD(longParam);
-					window->resolution.height = (unsigned int)HIWORD(longParam);
+					//high and low word are the client resolution. will need to change this
+					window->settings.resolution.width = (unsigned int)LOWORD(longParam);
+					window->settings.resolution.height = (unsigned int)HIWORD(longParam);
+
+					RECT tempRect;
+					GetClientRect(window->windowHandle, &tempRect);
+					window->clientArea.width = tempRect.right;
+					window->clientArea.height = tempRect.bottom;
+
+					GetWindowRect(window->windowHandle, &tempRect);
+					//window->resolution.width = tempRect.right;
+					//window->resolution.height = tempRect.bottom;
 
 					switch (wordParam)
 					{
@@ -2263,23 +2320,31 @@ namespace TinyWindow
 						{
 							if (manager->resizeEvent != nullptr)
 							{
-								manager->resizeEvent(window, window->resolution);
+								manager->resizeEvent(window, window->settings.resolution);
 							}
 							break;
 						}
 					}
 					break;
 				}
-				 
+				//only occurs when the window size is being dragged
 				case WM_SIZING:
 				{
-					window->resolution.width = (unsigned int)LOWORD(longParam);
-					window->resolution.height = (unsigned int)HIWORD(longParam);
+					RECT tempRect;
+					GetWindowRect(window->windowHandle, &tempRect);
+					window->settings.resolution.width = tempRect.right;
+					window->settings.resolution.height = tempRect.bottom;
+
+					GetClientRect(window->windowHandle, &tempRect);
+					window->clientArea.width = tempRect.right;
+					window->clientArea.height = tempRect.bottom;
 
 					if (manager->resizeEvent != nullptr)
 					{
-						manager->resizeEvent(window, window->resolution);
+						manager->resizeEvent(window, window->settings.resolution);
 					}
+
+					UpdateWindow(window->windowHandle);// , NULL, true);
 					break;
 				}
 
@@ -2370,7 +2435,7 @@ namespace TinyWindow
 								}
 							}
 
-							unsigned int translatedKey = 0;
+							translatedKey = 0;
 
 							switch (virtualKey)
 							{
@@ -2529,10 +2594,10 @@ namespace TinyWindow
 
 				case WM_SYSKEYDOWN:
 				{
-					unsigned int translatedKey = 0;
+					translatedKey = 0;
 
-						switch (DetermineLeftOrRight(wordParam, longParam))
-						{
+					switch (DetermineLeftOrRight(wordParam, longParam))
+					{
 						case VK_LMENU:
 						{
 							window->keys[leftAlt] = keyState_t::down;
@@ -2546,7 +2611,6 @@ namespace TinyWindow
 							translatedKey = rightAlt;
 							break;
 						}
-
 					}
 
 					if (manager->keyEvent != nullptr)
@@ -2559,7 +2623,7 @@ namespace TinyWindow
 
 				case WM_SYSKEYUP:
 				{
-					unsigned int translatedKey = 0;
+					translatedKey = 0;
 					switch (DetermineLeftOrRight(wordParam, longParam))
 					{
 						case VK_LMENU:
@@ -2785,6 +2849,7 @@ namespace TinyWindow
 					return DefWindowProc(windowHandle, winMessage, wordParam, longParam);
 				}
 			}
+
 			return 0;
 		}
 
@@ -2807,7 +2872,6 @@ namespace TinyWindow
 		//get the window that is associated with this Win32 window handle
 		tWindow* GetWindowByHandle(HWND windowHandle)
 		{
-			for (size_t windowIndex = 0; windowIndex < windowList.size(); windowIndex++)
 			for (auto & windowIndex : windowList)
 			{
 				if (windowIndex->windowHandle == windowHandle)
@@ -2848,21 +2912,21 @@ namespace TinyWindow
 			window->windowClass.hIcon = icon;
 			window->windowClass.hCursor = cursor;
 			window->windowClass.hbrBackground = brush;
-			window->windowClass.lpszMenuName = window->name;
-			window->windowClass.lpszClassName = window->name;
+			window->windowClass.lpszMenuName = window->settings.name;
+			window->windowClass.lpszClassName = window->settings.name;
 			RegisterClass(&window->windowClass);
 
 			window->windowHandle =
-				CreateWindow(window->name, window->name, WS_OVERLAPPEDWINDOW, 0,
-				0, window->resolution.width,
-				window->resolution.height,
+				CreateWindow(window->settings.name, window->settings.name, WS_OVERLAPPEDWINDOW, 0,
+				0, window->settings.resolution.width,
+				window->settings.resolution.height,
 				nullptr, nullptr, nullptr, nullptr);
 
 			SetWindowLongPtr(window->windowHandle, GWLP_USERDATA, (LONG_PTR)this);
 
 			//if TW_USE_VULKAN is defined then stop TinyWindow from creating an OpenGL context since it will conflict with a vulkan context
 #if !defined(TW_USE_VULKAN)
-			Platform_InitializeGL(window);
+			InitializeGL(window);
 #endif
 			ShowWindow(window->windowHandle, 1);
 			UpdateWindow(window->windowHandle);
@@ -2914,29 +2978,43 @@ namespace TinyWindow
 				WGL_SUPPORT_OPENGL_ARB, 1,
 				WGL_DRAW_TO_WINDOW_ARB, 1,
 				WGL_DOUBLE_BUFFER_ARB, 1,
-				WGL_RED_BITS_ARB, window->colorBits,
-				WGL_GREEN_BITS_ARB, window->colorBits,
-				WGL_BLUE_BITS_ARB, window->colorBits,
-				WGL_ALPHA_BITS_ARB, window->colorBits,
-				WGL_DEPTH_BITS_ARB, window->depthBits,
-				WGL_STENCIL_BITS_ARB, window->stencilBits,
+				WGL_RED_BITS_ARB, window->settings.colorBits,
+				WGL_GREEN_BITS_ARB, window->settings.colorBits,
+				WGL_BLUE_BITS_ARB, window->settings.colorBits,
+				WGL_ALPHA_BITS_ARB, window->settings.colorBits,
+				WGL_DEPTH_BITS_ARB, window->settings.depthBits,
+				WGL_STENCIL_BITS_ARB, window->settings.stencilBits,
 				WGL_ACCELERATION_ARB, WGL_FULL_ACCELERATION_ARB,
-				WGL_PIXEL_TYPE_ARB, WGL_TYPE_RGBA_ARB,
-				0
+				WGL_PIXEL_TYPE_ARB, WGL_TYPE_RGBA_ARB
 			};
+
+			std::vector<int> attribList;
+			attribList.assign(attribs, attribs + std::size(attribs));
 
 			if (wglChoosePixelFormatARB != nullptr)
 			{
+				if(window->settings.enableSRGB)
+				{
+					attribList.push_back(WGL_FRAMEBUFFER_SRGB_CAPABLE_ARB);
+				}
+
+				attribList.push_back(0); //needs a 0 to notify as the end of the list.
 				wglChoosePixelFormatARB(window->deviceContextHandle,
-					&attribs[0], nullptr, 1, &format, &count);
+					&attribList[0], nullptr, 1, &format, &count);
 				SetPixelFormat(window->deviceContextHandle, format,
 					&window->pixelFormatDescriptor);
 			}
 
 			else if (wglChoosePixelFormatEXT != nullptr)
 			{
+				if (window->settings.enableSRGB)
+				{
+					attribList.push_back(WGL_FRAMEBUFFER_SRGB_CAPABLE_EXT);
+				}
+
+				attribList.push_back(0);
 				wglChoosePixelFormatEXT(window->deviceContextHandle, 
-					&attribs[0], nullptr, 1, &format, &count);
+					&attribList[0], nullptr, 1, &format, &count);
 				SetPixelFormat(window->deviceContextHandle, format,
 					&window->pixelFormatDescriptor);
 			}
@@ -2944,7 +3022,7 @@ namespace TinyWindow
 			else
 			{
 				PIXELFORMATDESCRIPTOR pfd = {};
-				formatSetting_t* desiredSetting = new formatSetting_t(window->colorBits, window->colorBits, window->colorBits, window->colorBits, window->depthBits, window->stencilBits);
+				formatSetting_t* desiredSetting = new formatSetting_t(window->settings.colorBits, window->settings.colorBits, window->settings.colorBits, window->settings.colorBits, window->settings.depthBits, window->settings.stencilBits);
 				unsigned int bestPFDHandle = GetLegacyPFD(desiredSetting, window->deviceContextHandle)->handle;
 				if (!DescribePixelFormat(window->deviceContextHandle, bestPFDHandle, sizeof(pfd), &pfd))
 				{
@@ -3529,7 +3607,7 @@ namespace TinyWindow
 					//get current display mode
 					DEVMODE devmode;
 					//get all display modes
-					unsigned int modeIndex = -1;
+					unsigned int modeIndex = UINT_MAX;
 					while (EnumDisplaySettings(graphicsDevice.DeviceName, modeIndex, &devmode))
 					{
 						//get the current settings of the display
@@ -3545,7 +3623,7 @@ namespace TinyWindow
 							monitorSetting_t* newSetting = new monitorSetting_t(vec2_t<unsigned int>(devmode.dmPelsWidth, devmode.dmPelsHeight), devmode.dmBitsPerPel, devmode.dmDisplayFrequency);
 							newSetting->displayFlags = devmode.dmDisplayFlags;
 							newSetting->fixedOutput = devmode.dmDisplayFixedOutput;
-							monitor->settings.push_back(std::move(newSetting));
+							monitor->settings.insert(monitor->settings.begin(), std::move(newSetting));
 						}
 						modeIndex++;						
 					}
@@ -3589,6 +3667,214 @@ namespace TinyWindow
 
 			}
 			return false;
+		}
+
+		void Windows_ResetMonitors()
+		{
+			for (auto iter : monitorList)
+			{
+				ChangeDisplaySettingsEx(iter->displayName.c_str(), nullptr, nullptr, CDS_FULLSCREEN, nullptr);
+			}
+		}
+
+		std::error_code Windows_InitExtensions()
+		{
+			wglGetExtensionsStringARB = (PFNWGLGETEXTENSIONSSTRINGARBPROC)wglGetProcAddress("wglGetExtensionsStringARB");
+			wglGetExtensionsStringEXT = (PFNWGLGETEXTENSIONSSTRINGEXTPROC)wglGetProcAddress("wglGetExtensionsStringEXT");
+			if (wglGetExtensionsStringARB == nullptr && wglGetExtensionsStringEXT == nullptr)
+			{
+				return error_t::noExtensions;
+
+			}
+			wglChoosePixelFormatARB = (PFNWGLCHOOSEPIXELFORMATARBPROC)wglGetProcAddress("wglChoosePixelFormatARB");
+			wglChoosePixelFormatEXT = (PFNWGLCHOOSEPIXELFORMATEXTPROC)wglGetProcAddress("wglChoosePixelFormatEXT");
+			wglCreateContextAttribsARB = (PFNWGLCREATECONTEXTATTRIBSARBPROC)wglGetProcAddress("wglCreateContextAttribsARB");
+			wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
+			wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC)wglGetProcAddress("wglGetSwapIntervalEXT");
+
+			swapControlEXT = Windows_ExtensionSupported("WGL_EXT_swap_control");
+			wglFramebufferSRGBCapableARB = Windows_ExtensionSupported("WGL_ARB_framebuffer_sRGB");
+
+			wglGetPixelFormatAttribfvARB = (PFNWGLGETPIXELFORMATATTRIBFVARBPROC)wglGetProcAddress("wglGetPixelFormatAttribfvARB");
+			wglGetPixelFormatAttribfvEXT = (PFNWGLGETPIXELFORMATATTRIBFVEXTPROC)wglGetProcAddress("wglGetPixelFormatAttribfvEXT");
+			wglGetPixelFormatAttribivARB = (PFNWGLGETPIXELFORMATATTRIBIVARBPROC)wglGetProcAddress("wglGetPixelFormatAttribivARB");
+			wglGetPixelFormatAttribivEXT = (PFNWGLGETPIXELFORMATATTRIBIVEXTPROC)wglGetProcAddress("wglGetPixelFormatAttribivEXT");
+
+			return error_t::success;
+		}
+
+		std::error_code Windows_InitGL(tWindow* window)
+		{
+			window->deviceContextHandle = GetDC(window->windowHandle);
+			InitializePixelFormat(window);
+			if (wglCreateContextAttribsARB)
+			{
+				int attribs[]
+				{
+					WGL_CONTEXT_MAJOR_VERSION_ARB, window->settings.versionMajor,
+					WGL_CONTEXT_MINOR_VERSION_ARB, window->settings.versionMinor,
+					WGL_CONTEXT_PROFILE_MASK_ARB, window->settings.profile,
+	#if defined(_DEBUG)
+					WGL_CONTEXT_FLAGS_ARB, WGL_CONTEXT_DEBUG_BIT_ARB,
+	#endif
+					0
+				};
+
+				window->glRenderingContextHandle = wglCreateContextAttribsARB(window->deviceContextHandle, nullptr, attribs);
+
+				if (window->glRenderingContextHandle == nullptr)
+				{
+					switch (GetLastError())
+					{
+					case ERROR_INVALID_VERSION_ARB:
+					{
+						return TinyWindow::error_t::invalidVersion;
+					}
+
+					case ERROR_INVALID_PROFILE_ARB:
+					{
+						return TinyWindow::error_t::invalidProfile;
+					}
+					}
+				}
+			}
+
+			else
+			{
+				//use the old fashion method if the extensions aren't loading
+				window->glRenderingContextHandle = wglCreateContext(window->deviceContextHandle);
+			}
+
+			wglMakeCurrent(window->deviceContextHandle, window->glRenderingContextHandle);
+
+			window->contextCreated = (window->glRenderingContextHandle != nullptr);
+
+			if (window->contextCreated)
+			{
+				return TinyWindow::error_t::success;
+			}
+
+			return TinyWindow::error_t::invalidContext;
+		}
+
+		void Windows_ShareContexts(tWindow* sourceWindow, tWindow* newWindow)
+		{
+			wglShareLists(sourceWindow->glRenderingContextHandle, newWindow->glRenderingContextHandle);
+		}
+
+		void ShutdownDummy()
+		{
+			if (dummyGLContextHandle)
+			{
+				wglMakeCurrent(nullptr, nullptr);
+				wglDeleteContext(dummyGLContextHandle);
+			}
+
+			ReleaseDC(dummyWindowHandle, dummyDeviceContextHandle);
+			UnregisterClass("dummy", dummyWindowInstance);
+
+			FreeModule(dummyWindowInstance);
+
+			dummyDeviceContextHandle = nullptr;
+			dummyWindowHandle = nullptr;
+			dummyGLContextHandle = nullptr;
+		}
+
+		void Windows_InitGamepad()
+		{
+			DWORD result;
+			for(size_t iter = 0; iter < XUSER_MAX_COUNT; iter++)
+			{
+				XINPUT_STATE state;
+				ZeroMemory(&state, sizeof(XINPUT_STATE));
+				result = XInputGetState((DWORD)iter, &state);
+
+				XINPUT_CAPABILITIES caps;
+				XInputGetCapabilities((DWORD)iter, XINPUT_FLAG_GAMEPAD, &caps);
+
+				gamepadList[iter] = new gamepad_t();
+
+				Windows_FillGamepad(state, iter);
+
+				JOYCAPS joycaps;
+				ZeroMemory(&joycaps, sizeof(joycaps));
+				joyGetDevCaps(iter, &joycaps, sizeof(joycaps));
+
+				if(result == ERROR_SUCCESS)
+				{
+					if(caps.Flags & XINPUT_CAPS_FFB_SUPPORTED)
+					{
+						printf("has force feedback \n");
+					}
+
+					if(caps.Flags & XINPUT_CAPS_WIRELESS)
+					{
+						printf("is wireless \n");
+					}
+
+
+					printf("sending force feedback \n");
+					XINPUT_VIBRATION vib;
+					ZeroMemory(&vib, sizeof(XINPUT_VIBRATION));
+					vib.wLeftMotorSpeed = 65535;
+					vib.wRightMotorSpeed = 65535;				
+				}
+
+				else
+				{
+					//controller not connected
+				}
+			}
+
+			
+		}
+
+		void Windows_PollGamepads()
+		{
+			DWORD result;
+			for (size_t iter = 0; iter < XUSER_MAX_COUNT; iter++)
+			{
+				XINPUT_STATE state;
+				ZeroMemory(&state, sizeof(XINPUT_STATE));
+
+				result = XInputGetState((DWORD)iter, &state);
+
+				Windows_FillGamepad(state, iter);
+			}
+		}
+
+		void Windows_FillGamepad(XINPUT_STATE state, size_t gamepadIter)
+		{
+			//ok... how do I set up a callback system with this?
+			//callback per controller region?
+			gamepadList[gamepadIter]->buttonStates[gamepad_t::button_t::Dpad_top] = (state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP);
+			gamepadList[gamepadIter]->buttonStates[gamepad_t::button_t::Dpad_bottom] = (state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN);
+			gamepadList[gamepadIter]->buttonStates[gamepad_t::button_t::Dpad_left] = (state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT);
+			gamepadList[gamepadIter]->buttonStates[gamepad_t::button_t::Dpad_right] = (state.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT);
+
+			gamepadList[gamepadIter]->buttonStates[gamepad_t::button_t::start] = (state.Gamepad.wButtons & XINPUT_GAMEPAD_START);
+			gamepadList[gamepadIter]->buttonStates[gamepad_t::button_t::select] = (state.Gamepad.wButtons & XINPUT_GAMEPAD_BACK);
+
+			gamepadList[gamepadIter]->buttonStates[gamepad_t::button_t::left_stick] = (state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB);
+			gamepadList[gamepadIter]->buttonStates[gamepad_t::button_t::right_stick] = (state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB);
+
+			gamepadList[gamepadIter]->buttonStates[gamepad_t::button_t::left_shoulder] = (state.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER);
+			gamepadList[gamepadIter]->buttonStates[gamepad_t::button_t::right_shoulder] = (state.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER);
+
+			gamepadList[gamepadIter]->buttonStates[gamepad_t::button_t::face_bottom] = (state.Gamepad.wButtons & XINPUT_GAMEPAD_A);
+			gamepadList[gamepadIter]->buttonStates[gamepad_t::button_t::face_right] = (state.Gamepad.wButtons & XINPUT_GAMEPAD_B);
+			gamepadList[gamepadIter]->buttonStates[gamepad_t::button_t::face_left] = (state.Gamepad.wButtons & XINPUT_GAMEPAD_X);
+			gamepadList[gamepadIter]->buttonStates[gamepad_t::button_t::face_top] = (state.Gamepad.wButtons & XINPUT_GAMEPAD_Y);
+
+			gamepadList[gamepadIter]->leftTrigger = (float)state.Gamepad.bLeftTrigger / (float)std::numeric_limits<unsigned char>::max();
+			gamepadList[gamepadIter]->rightTrigger = (float)state.Gamepad.bRightTrigger / (float)std::numeric_limits<unsigned char>::max();;
+
+			//shift these values to be between 1 and -1
+			gamepadList[gamepadIter]->leftStick[0] = (float)state.Gamepad.sThumbLX / (float)std::numeric_limits<short>::max();
+			gamepadList[gamepadIter]->leftStick[1] = (float)state.Gamepad.sThumbLY / (float)std::numeric_limits<short>::max();
+
+			gamepadList[gamepadIter]->rightStick[0] = (float)state.Gamepad.sThumbRX / (float)std::numeric_limits<short>::max();
+			gamepadList[gamepadIter]->rightStick[1] = (float)state.Gamepad.sThumbRY / (float)std::numeric_limits<short>::max();
 		}
 
 #elif defined(TW_LINUX)
@@ -3755,7 +4041,7 @@ namespace TinyWindow
 			XSetWMProtocols(currentDisplay, window->windowHandle, &window->AtomClose, true);	
 
 			window->currentDisplay = currentDisplay;
-			Platform_InitializeGL(window);
+			InitializeGL(window);
 			
 			return TinyWindow::error_t::success;
 		}
@@ -4661,6 +4947,34 @@ namespace TinyWindow
 			XFree(configs);
 
 			return BestConfig;
+		}
+
+		std::error_code Linux_InitGL(tWindow* window)
+		{
+			window->context = glXCreateContext(
+				currentDisplay,
+				window->visualInfo,
+				0,
+				true);
+
+			if (window->context)
+			{
+				glXMakeCurrent(currentDisplay,
+					window->windowHandle,
+					window->context);
+
+				XWindowAttributes l_Attributes;
+
+				XGetWindowAttributes(currentDisplay,
+					window->windowHandle, &l_Attributes);
+				window->position.x = l_Attributes.x;
+				window->position.y = l_Attributes.y;
+
+				window->contextCreated = true;
+				window->InitializeAtoms();
+				return TinyWindow::error_t::success;
+			}
+			return TinyWindow::error_t::linuxCannotConnectXServer;
 		}
 
 #endif

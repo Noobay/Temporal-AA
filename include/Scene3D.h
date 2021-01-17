@@ -1,5 +1,6 @@
 ﻿#ifndef SCENE3D_H
 #define SCENE3D_H
+
 #include <assimp/Importer.hpp>
 #include <assimp/cimport.h>
 #include <assimp/scene.h>
@@ -7,7 +8,6 @@
 #include "Scene.h"
 #include "Texture.h"
 #include "Model.h"
-
 
 struct baseMaterialSettings_t
 {
@@ -17,9 +17,6 @@ struct baseMaterialSettings_t
 	glm::vec4								emissive;
 	glm::vec4								reflective;
 
-	GLuint		bufferHandle;
-	GLuint		uniformHandle;
-
 	baseMaterialSettings_t()
 	{
 		diffuse = glm::vec4(0.0f);
@@ -27,8 +24,6 @@ struct baseMaterialSettings_t
 		ambient = glm::vec4(0.0f);
 		emissive = glm::vec4(0.0f);
 		reflective = glm::vec4(0.0f);
-		bufferHandle = 0;
-		uniformHandle = 0;
 	}
 };
 
@@ -38,16 +33,15 @@ public:
 
 	scene3D(const char* windowName = "Ziyad Barakat's Portfolio(3D scene)",
 		camera* camera3D = new camera(glm::vec2(1280, 720), 200.0f, camera::projection_t::perspective, 0.1f, 1000000.f),
-		const char* shaderConfigPath = "../../resources/shaders/Model.txt",
-		model_t* model = new model_t("../../resources/models/SoulSpear/SoulSpear.fbx")) :
+		const char* shaderConfigPath = "../../resources/shaders/anim/AnimTest.txt",
+		model_t* model = new model_t("../../resources/models/anims/Goalkeeper.fbx")) :
 		scene(windowName, camera3D, shaderConfigPath)
 	{
 		testModel = model;
-		materialSettingsBuffer = new baseMaterialSettings_t();
 		wireframe = false;
 	}
 
-	~scene3D() {};
+	virtual ~scene3D() {};
 
 	//override input code. use this to mess with camera
 	virtual void SetupCallbacks() override 
@@ -65,49 +59,58 @@ public:
 	{
 		scene::Initialize();
 		testModel->loadModel();
-
+		//for(size_t iter = 0; iter < testModel->meshes.size(); iter++)
+		{
+			testModel->boneBuffer.Initialize(0, gl_shader_storage_buffer, gl_dynamic_draw);
+			testModel->boneBuffer.Update(gl_shader_storage_buffer, gl_dynamic_draw,
+				sizeof(glm::mat4) * testModel->boneBuffer.data.finalTransforms.size(),
+				testModel->boneBuffer.data.finalTransforms.data());
+		}
 		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
 	}
 
 protected:
 
 	model_t* testModel;
-	//texture* diffuse;
-	baseMaterialSettings_t*	materialSettingsBuffer;
+	bufferHandler_t<baseMaterialSettings_t>	materialBuffer;
 	bool wireframe;
 
 	virtual void Draw() override 
 	{
 		//for each mesh in the model
-		for(auto iter : testModel->meshes)
+		for(size_t iter = 0; iter < testModel->meshes.size(); iter++)
 		{
-			if (iter.isCollision)
+			if (testModel->meshes[iter].isCollision)
 			{
 				continue;
 			}
+
 			//set the materials per mesh
-			materialSettingsBuffer->diffuse = iter.diffuse;
-			materialSettingsBuffer->ambient = iter.ambient;
-			materialSettingsBuffer->specular = iter.specular;
-			materialSettingsBuffer->reflective = iter.reflective;
-			UpdateBuffer(materialSettingsBuffer, materialSettingsBuffer->bufferHandle, sizeof(*materialSettingsBuffer), gl_uniform_buffer, gl_dynamic_draw);
+			materialBuffer.data.diffuse = testModel->meshes[iter].diffuse;
+			materialBuffer.data.ambient = testModel->meshes[iter].ambient;
+			materialBuffer.data.specular = testModel->meshes[iter].specular;
+			materialBuffer.data.reflective = testModel->meshes[iter].reflective;
+			materialBuffer.Update(gl_uniform_buffer, gl_dynamic_draw);
 
 			//glBindBuffer(gl_element_array_buffer, iter.indexBufferHandle);
-			glBindVertexArray(iter.vertexArrayHandle);
+			glBindVertexArray(testModel->meshes[iter].vertexArrayHandle);
 			glUseProgram(this->programGLID);
 
+			//first bind the correct bone transforms
+			//testModel->BindBoneTransforms(iter, 0);
 			/*if (iter.textures.size() > 0)
 			{
 
 				iter.textures[0].GetUniformLocation(programGLID);
 			}*/
-			glViewport(0, 0, windows[0]->resolution.width, windows[0]->resolution.height);
+			glViewport(0, 0, windows[0]->settings.resolution.width, windows[0]->settings.resolution.height);
 
 			if (wireframe)
 			{
 				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 			}
-			glDrawElements(GL_TRIANGLES, iter.indices.size(), GL_UNSIGNED_INT, 0);
+			glDrawElements(GL_TRIANGLES, (GLsizei)testModel->meshes[iter].indices.size(), GL_UNSIGNED_INT, 0);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
 		
@@ -127,32 +130,39 @@ protected:
 		sceneCamera->Update();
 		sceneClock->UpdateClockAdaptive();
 
-		defaultUniform->deltaTime = (float)sceneClock->GetDeltaTime();
-		defaultUniform->totalTime = (float)sceneClock->GetTotalTime();
-		defaultUniform->framesPerSec = (float)(1.0 / sceneClock->GetDeltaTime());
+		defaultPayload.data.deltaTime = (float)sceneClock->GetDeltaTime();
+		defaultPayload.data.totalTime = (float)sceneClock->GetTotalTime();
+		defaultPayload.data.framesPerSec = (float)(1.0 / sceneClock->GetDeltaTime());
+		defaultPayload.data.totalFrames++;
 
-		defaultUniform->projection = sceneCamera->projection;
-		defaultUniform->view = sceneCamera->view;
+		defaultPayload.data.projection = sceneCamera->projection;
+		defaultPayload.data.view = sceneCamera->view;
 		if (sceneCamera->currentProjectionType == camera::projection_t::perspective)
 		{
-			defaultUniform->translation = testModel->makeTransform();
+			defaultPayload.data.translation = testModel->makeTransform();
 		}
 
 		else
 		{
-			defaultUniform->translation = sceneCamera->translation;
+			defaultPayload.data.translation = sceneCamera->translation;
 		}
 		
-		UpdateBuffer(defaultUniform, defaultUniform->bufferHandle, sizeof(*defaultUniform), gl_uniform_buffer, gl_dynamic_draw);
+		defaultPayload.Update(gl_uniform_buffer, gl_dynamic_draw);
+		
+
+		//only one animation in marv so just grab the first
+		//pass in time in milliseconds
+		testModel->Evaluate("", sceneClock->GetTotalTime(), true, 24, 0);
 	}
 
 	virtual void BuildGUI(tWindow* window, ImGuiIO io) override
 	{
 		scene::BuildGUI(window, io);
-		ImGuiCameraSettings();
+		ImGui::Checkbox("wireframe", &wireframe);
+		DrawCameraStats();
 
 		//set up the view matrix
-		ImGui::Begin("camera transform", &testModel->isGUIActive, ImVec2(0, 0));
+		ImGui::Begin("camera transform", &testModel->isGUIActive);
 		if (ImGui::CollapsingHeader("view matrix", NULL))
 		{
 			ImGui::DragFloat4("right", (float*)&sceneCamera->view[0], 0.1f, -100.0f, 100.0f);
@@ -175,7 +185,7 @@ protected:
 			ImGui::DragFloat4("row 3", (float*)&sceneCamera->translation[3], 0.1f, -100.0f, 100.0f);
 		}
 
-		ImGui::Text("pitch: %f\tyaw: %f\troll: %f", glm::degrees(sceneCamera->rotator.y), glm::degrees(sceneCamera->rotation.z), glm::degrees(sceneCamera->rotation.x));
+		ImGui::Text("pitch: %.1f\tyaw: %.1f\troll: %.1f", glm::degrees(sceneCamera->rotator.y), glm::degrees(sceneCamera->rotation.z), glm::degrees(sceneCamera->rotation.x));
 		ImGui::End();
 
 	/*	ImGui::Begin("Model", &testModel->isGUIActive, ImVec2(0, 0));
@@ -189,47 +199,45 @@ protected:
 		//ImGui::End();
 	}
 
-	void ImGuiCameraSettings()
+	virtual void DrawCameraStats() override
 	{
-		if (ImGui::Button("toggle wireframe"))
-		{
-			wireframe = !wireframe;
-		}
-		/*ImGui::InputFloat("camera speed", &sceneCamera->speed, 0.f);
+		//set up the view matrix
+		ImGui::Begin("camera", &isGUIActive);
+
+		ImGui::DragFloat("near plane", &sceneCamera->nearPlane);
+		ImGui::DragFloat("far plane", &sceneCamera->farPlane);
+		ImGui::SliderFloat("Field of view", &sceneCamera->fieldOfView, 0, 90, "%.0f");
+
+		ImGui::InputFloat("camera speed", &sceneCamera->speed, 0.f);
 		ImGui::InputFloat("x sensitivity", &sceneCamera->xSensitivity, 0.f);
 		ImGui::InputFloat("y sensitivity", &sceneCamera->ySensitivity, 0.f);
-		ImGui::InputFloat("z sensitivity", &sceneCamera->zSensitivity, 0.f);
-
-		if (ImGui::SliderFloat("Field of view", &sceneCamera->fieldOfView, 0, 90, "%.10f"))
-		{
-			sceneCamera->UpdateProjection();
-			defaultUniform->projection = sceneCamera->projection;
-			UpdateBuffer(defaultUniform, defaultUniform->bufferHandle, sizeof(defaultUniform), gl_uniform_buffer, gl_dynamic_draw);
-		}*/
+		ImGui::End();
 	}
 
 	virtual void InitializeUniforms() override
 	{
-		defaultUniform = new defaultUniformBuffer(sceneCamera);
-		glViewport(0, 0, windows[0]->resolution.width, windows[0]->resolution.height);
+		defaultPayload.data = defaultUniformBuffer(sceneCamera);
+		glViewport(0, 0, windows[0]->settings.resolution.width, windows[0]->settings.resolution.height);
 
-		defaultUniform->resolution = glm::vec2(windows[0]->resolution.width, windows[0]->resolution.height);
-		defaultUniform->projection = sceneCamera->projection;
-		defaultUniform->translation = sceneCamera->translation;
-		defaultUniform->view = sceneCamera->view;
+		defaultPayload.data.resolution = glm::vec2(windows[0]->settings.resolution.width, windows[0]->settings.resolution.height);
+		defaultPayload.data.projection = sceneCamera->projection;
+		defaultPayload.data.translation = sceneCamera->translation;
+		defaultPayload.data.view = sceneCamera->view;
 
-		SetupBuffer(defaultUniform, defaultUniform->bufferHandle, sizeof(*defaultUniform), 0, gl_uniform_buffer, gl_dynamic_draw);
-		SetupBuffer(materialSettingsBuffer, materialSettingsBuffer->bufferHandle, sizeof(*materialSettingsBuffer), 1, gl_uniform_buffer, gl_dynamic_draw);
+		materialBuffer.data = baseMaterialSettings_t();
+
+		defaultPayload.Initialize(0);
+		materialBuffer.Initialize(1);
 	}
 
-	void HandleMouseClick(tWindow* window, mouseButton_t button, buttonState_t state) override
+	virtual void HandleMouseClick(tWindow* window, mouseButton_t button, buttonState_t state) override
 	{
 		scene::HandleMouseClick(window, button, state);
 	}
 
-	void HandleMouseMotion(tWindow* window, vec2_t<int> windowPosition, vec2_t<int> screenPosition) override
+	virtual void HandleMouseMotion(tWindow* window, vec2_t<int> windowPosition, vec2_t<int> screenPosition) override
 	{
-		scene3D* thisScene = (scene3D*)window->userData;
+		scene3D* thisScene = (scene3D*)window->settings.userData;
 		scene::HandleMouseMotion(window, windowPosition, screenPosition);
 
 		glm::vec2 mouseDelta = glm::vec2(window->mousePosition.x - window->previousMousePosition.x, window->mousePosition.y - window->previousMousePosition.y);
@@ -248,36 +256,34 @@ protected:
 		}
 	}
 
-	void HandleMaximize(tWindow* window) override
+	virtual void HandleMaximize(tWindow* window) override
 	{
-		scene3D* thisScene = (scene3D*)window->userData;
-		glViewport(0, 0, window->resolution.width, window->resolution.height);
-		thisScene->sceneCamera->resolution = glm::vec2(window->resolution.width, window->resolution.height);
-		thisScene->defaultUniform->resolution = thisScene->sceneCamera->resolution;
-		thisScene->sceneCamera->UpdateProjection();
-		thisScene->defaultUniform->projection = thisScene->sceneCamera->projection;
+		glViewport(0, 0, window->settings.resolution.width, window->settings.resolution.height);
+		sceneCamera->resolution = glm::vec2(window->settings.resolution.width, window->settings.resolution.height);
+		defaultPayload.data.resolution = sceneCamera->resolution;
+		sceneCamera->UpdateProjection();
+		defaultPayload.data.projection = sceneCamera->projection;
 
 		//bind the uniform buffer and refill it
-		UpdateBuffer(thisScene->defaultUniform, thisScene->defaultUniform->bufferHandle, sizeof(defaultUniform), gl_uniform_buffer, gl_dynamic_draw);
+		defaultPayload.Update(gl_uniform_buffer, gl_dynamic_draw);
 	}
 
-	void HandleWindowResize(tWindow* window, TinyWindow::vec2_t<unsigned int> dimensions) override
+	virtual void HandleWindowResize(tWindow* window, TinyWindow::vec2_t<unsigned int> dimensions) override
 	{
-		scene3D* thisScene = (scene3D*)window->userData;
-
+		scene3D* thisScene = (scene3D*)window->settings.userData;
 		glViewport(0, 0, dimensions.width, dimensions.height);
 		sceneCamera->resolution = glm::vec2(dimensions.width, dimensions.height);
-		defaultUniform->resolution = sceneCamera->resolution;
+		defaultPayload.data.resolution = sceneCamera->resolution;
 		sceneCamera->UpdateProjection();
-		defaultUniform->projection = sceneCamera->projection;
-		defaultUniform->deltaTime = (float)sceneClock->GetDeltaTime();
-		defaultUniform->totalTime = (float)sceneClock->GetTotalTime();
-		defaultUniform->framesPerSec = (float)(1.0 / sceneClock->GetDeltaTime());
+		defaultPayload.data.projection = sceneCamera->projection;
+		defaultPayload.data.deltaTime = (float)sceneClock->GetDeltaTime();
+		defaultPayload.data.totalTime = (float)sceneClock->GetTotalTime();
+		defaultPayload.data.framesPerSec = (float)(1.0 / sceneClock->GetDeltaTime());
 
-		UpdateBuffer(defaultUniform, defaultUniform->bufferHandle, sizeof(defaultUniform), gl_uniform_buffer, gl_dynamic_draw);
+		defaultPayload.Update(gl_uniform_buffer, gl_dynamic_draw);
 	}
 
-	void HandleKey(tWindow* window, int key, keyState_t state)	override
+	virtual void HandleKey(tWindow* window, int key, keyState_t state)	override
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		if (state == keyState_t::down)
@@ -304,62 +310,46 @@ protected:
 
 		float deltaTime = (float)sceneClock->GetDeltaTime();
 
-		if (state == keyState_t::down)
+		if (state == keyState_t::down) //instead of one key could we check multiple keys?
 		{
-			switch (key)
-			{
-			case 'w':
+			if(window->keys['w'] == keyState_t::down)
 			{
 				sceneCamera->MoveForward(camSpeed, deltaTime);
-				break;
 			}
 
-			case 's':
+			if (window->keys['s'] == keyState_t::down)
 			{
 				sceneCamera->MoveForward(-camSpeed, deltaTime);
-				break;
 			}
 
-			case 'a':
+			if (window->keys['a'] == keyState_t::down)
 			{
 				sceneCamera->MoveRight(-camSpeed, deltaTime);
-				//sceneCamera->position -= sceneCamera->localRight * (camSpeed * (float)sceneClock->GetDeltaTime());
-				break;
 			}
 
-			case 'd':
+			if (window->keys['d'] == keyState_t::down)
 			{
-				//sceneCamera->position += sceneCamera->localRight * (camSpeed * (float)sceneClock->GetDeltaTime());
 				sceneCamera->MoveRight(camSpeed, deltaTime);
-				break;
 			}
 
-			case 'e':
+			if (window->keys['e'] == keyState_t::down)
 			{
 				sceneCamera->MoveUp(camSpeed, deltaTime);
-				break;
 			}
 
-			case 'q':
+			if (window->keys['q'] == keyState_t::down)
 			{
 				sceneCamera->MoveUp(-camSpeed, deltaTime);
-				break;
 			}
 
-			case 'z':
+			if (window->keys['z'] == keyState_t::down)
 			{
 				sceneCamera->Roll(glm::radians((float)sceneCamera->zSensitivity * deltaTime));
 			}
 
-			case 'x':
+			if (window->keys['x'] == keyState_t::down)
 			{
 				sceneCamera->Roll(glm::radians((float)-sceneCamera->zSensitivity * deltaTime));
-			}
-
-			default:
-			{
-				break;
-			}
 			}
 		}
 	}};

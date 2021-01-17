@@ -1,6 +1,53 @@
 #ifndef FRAMEBUFFER_H
 #define FRAMEBUFFER_H
-	
+
+struct FBODescriptor : public textureDescriptor
+{
+	enum class attachmentType_t
+	{
+		color,
+		depth,
+		stencil,
+		depthAndStencil
+	};
+
+	FBODescriptor(GLuint sampleCount = 1, attachmentType_t attachmentType = attachmentType_t::color, textureDescriptor texDesc = textureDescriptor())
+	{
+		this->sampleCount = sampleCount;
+		this->attachmentType = attachmentType;
+		attachmentFormat = 0;
+		attachmentHandle = 0;
+		layers = 0;
+
+		this->dimensions = texDesc.dimensions;
+		this->channels = texDesc.channels;
+		this->format = texDesc.format;
+		this->bitsPerPixel = texDesc.bitsPerPixel;
+
+		this->currentMipmapLevel = texDesc.currentMipmapLevel;
+		this->mipmapLevels = texDesc.mipmapLevels;
+		this->border = texDesc.border;
+		this->xOffset = texDesc.xOffset;
+		this->yOffset = texDesc.yOffset;
+
+		this->internalFormat = texDesc.internalFormat;
+		this->target = texDesc.target;
+		this->dataType = texDesc.dataType;
+
+		this->minFilterSetting = texDesc.minFilterSetting;
+		this->magFilterSetting = texDesc.magFilterSetting;
+		this->wrapSSetting = texDesc.wrapSSetting;
+		this->wrapTSetting = texDesc.wrapTSetting;
+		this->wrapRSetting = texDesc.wrapRSetting;
+	}
+
+	GLuint				layers;
+	GLuint				sampleCount;
+	GLenum				attachmentFormat;
+	GLuint				attachmentHandle;
+	attachmentType_t	attachmentType;
+};
+
 class frameBuffer
 {
 public:
@@ -9,83 +56,190 @@ public:
 	class attachment_t : public texture
 	{
 	public:
-		enum class attachmentType_t
-		{
-			color,
-			depth,
-			stencil,
-			depthAndStencil
-		};
 
-		attachment_t(attachmentType_t attachment = attachmentType_t::color,
-			std::string uniformName = "defaultTexture", glm::vec2 resolution = glm::vec2(1280, 720),
-			textureType_t texType = textureType_t::image, GLint format = GL_RGBA, GLenum target = GL_TEXTURE_2D,
-			GLint currentMipmapLevel = 0, GLint mipmapLevels = 1, GLint border = 0, GLenum dataType = GL_UNSIGNED_BYTE,
-			GLenum internalDataType = GL_RGBA16, GLint xOffset = 0, GLint yOffset = 0,
-			GLenum minFilterSetting = GL_LINEAR, GLenum magFilterSetting = GL_LINEAR,
-			GLenum wrapSSetting = GL_REPEAT, GLenum wrapTSetting = GL_REPEAT, GLenum wrapRSetting = gl_clamp_to_edge)
+		attachment_t(std::string uniformName = "defaultTexture", FBODescriptor FBODesc = FBODescriptor())
 		{
 			this->uniformName = uniformName;
-
-			this->attachmentType = attachment;
-
-			this->uniformName = uniformName;
-			this->width = resolution.x;
-			this->height = resolution.y;
-			this->channels = 0;
-			this->format = 0;
-			this->format = format;
-			this->target = target;
-			this->currentMipmapLevel = currentMipmapLevel;
-			this->mipmapLevels = mipmapLevels;
-			this->border = border;
-			this->dataType = dataType;
-			this->internalDataType = internalDataType;
-			this->xOffset = xOffset;
-			this->yOffset = yOffset;
-
-			this->minFilterSetting = minFilterSetting;
-			this->magFilterSetting = magFilterSetting;
-			this->wrapSSetting = wrapSSetting;
-			this->wrapTSetting = wrapTSetting;
-			this->wrapRSetting = wrapRSetting;
-
 			this->handle = 0;
-
 			this->texType = texType;
+			isResident = false;
+
+			this->data = nullptr;			
 
 			attachmentHandle = 0;
+			//need a better system to this redundant bullshit
+			this->texDesc = (textureDescriptor)FBODesc;
+			this->FBODesc = FBODesc;
 
-			glGenTextures(1, &handle);
-			glBindTexture(target, handle);
-			glTexImage2D(target, currentMipmapLevel, internalDataType, width, height, border, format, dataType, nullptr);
-			glTexParameteri(target, GL_TEXTURE_WRAP_S, wrapSSetting);
-			glTexParameteri(target, GL_TEXTURE_WRAP_T, wrapTSetting);
-			glTexParameteri(target, GL_TEXTURE_MIN_FILTER, minFilterSetting);
-			glTexParameteri(target, GL_TEXTURE_MAG_FILTER, magFilterSetting);
+			glCreateTextures(this->FBODesc.target, 1, &handle);
+			glBindTexture(this->FBODesc.target, handle);
+			switch (this->FBODesc.target)
+			{
+			case gl_texture_2d_multisample:
+			{
+
+				glTextureStorage2DMultisample(handle, this->FBODesc.sampleCount, this->FBODesc.internalFormat, this->FBODesc.dimensions.x, this->FBODesc.dimensions.y, true);
+				break;
+			}
+
+			case gl_texture_2d:
+			{
+				//parse internal format as bits per pixel
+				glTexImage2D(this->FBODesc.target, this->FBODesc.currentMipmapLevel, this->FBODesc.internalFormat, this->FBODesc.dimensions.x, this->FBODesc.dimensions.y, this->FBODesc.border, this->FBODesc.format, this->FBODesc.dataType, nullptr);
+				break;
+			}
+
+			case gl_texture_2d_array:
+			case gl_texture_3d:
+			{
+				glTexImage3D(this->FBODesc.target, this->FBODesc.currentMipmapLevel, this->FBODesc.internalFormat, this->FBODesc.dimensions.x, this->FBODesc.dimensions.y, this->FBODesc.dimensions.z, this->FBODesc.border, this->FBODesc.format, this->FBODesc.dataType, nullptr);
+				break;
+			}
+			}
+
+			glTexParameteri(this->FBODesc.target, GL_TEXTURE_MIN_FILTER, this->FBODesc.minFilterSetting);
+			glTexParameteri(this->FBODesc.target, GL_TEXTURE_MAG_FILTER, this->FBODesc.magFilterSetting);
+			glTexParameteri(this->FBODesc.target, GL_TEXTURE_WRAP_S, this->FBODesc.wrapSSetting);
+			glTexParameteri(this->FBODesc.target, GL_TEXTURE_WRAP_T, this->FBODesc.wrapTSetting);
+			if(this->FBODesc.mipmapLevels > 0)
+			{
+				glGenerateMipmap(this->FBODesc.target);
+			}
 			UnbindTexture();
 		}
 
 		void Initialize(GLenum attachmentFormat)
 		{
-			this->attachmentFormat = attachmentFormat;
-			glFramebufferTexture(gl_framebuffer, this->attachmentFormat, handle, currentMipmapLevel);
+			FBODesc.attachmentFormat = attachmentFormat;
+			if (FBODesc.layers > 0)
+			{
+				for (size_t iter = 0; iter < FBODesc.layers; iter++)
+				{
+					glFramebufferTextureLayer(gl_framebuffer, gl_color_attachment0 + iter, handle, 0, (GLint)iter);
+				}
+			}
+			else
+			{
+
+				glFramebufferTexture(gl_framebuffer, attachmentFormat, handle, FBODesc.currentMipmapLevel);
+			}
+
+			switch(attachmentFormat)
+			{
+			case gl_depth_attachment:
+			{
+				SetReadMode(FBODescriptor::attachmentType_t::depth);
+				break;
+			}
+			
+			case gl_stencil_attachment:
+			{
+				SetReadMode(FBODescriptor::attachmentType_t::stencil);
+				break;
+			}
+
+			case gl_depth_stencil_attachment:
+			{
+				SetReadMode(FBODescriptor::attachmentType_t::stencil);
+				break;
+			}
+
+			default:
+			{
+				break;
+			}
+			}
 		}
 
-		void Resize(glm::vec2 newSize)
+		void Resize(glm::ivec3 newSize, bool unbind = true)
 		{
-			width = newSize.x;
-			height = newSize.y;
+			texDesc.dimensions = newSize;
+			FBODesc.dimensions = newSize;
+
+			switch (FBODesc.target)
+			{
+			case gl_texture_2d_multisample:
+			{
+				BindTexture();
+				glDeleteTextures(1, &handle);
+				glCreateTextures(FBODesc.target, 1, &handle);
+				BindTexture();
+				glTextureStorage2DMultisample(handle, this->FBODesc.sampleCount, this->FBODesc.internalFormat, this->FBODesc.dimensions.x, this->FBODesc.dimensions.y, true);
+				UnbindTexture();
+				break;
+			}
+
+			case gl_texture_2d:
+			{
+				BindTexture();
+				glTexImage2D(FBODesc.target, FBODesc.currentMipmapLevel, FBODesc.internalFormat, FBODesc.dimensions.x, FBODesc.dimensions.y, FBODesc.border, FBODesc.format, FBODesc.dataType, nullptr);
+				UnbindTexture();
+				break;
+			}
+
+			case gl_texture_3d:
+			case gl_texture_2d_array:
+			{
+				BindTexture();
+				glTexImage3D(this->FBODesc.target, this->FBODesc.currentMipmapLevel, this->FBODesc.internalFormat, this->FBODesc.dimensions.x, this->FBODesc.dimensions.y, this->FBODesc.dimensions.z, this->FBODesc.border, this->FBODesc.format, this->FBODesc.dataType, nullptr);
+				UnbindTexture();
+				break;
+			}
+			}
+		}
+
+		void SetReadMode(FBODescriptor::attachmentType_t attachmentType)
+		{
 			BindTexture();
-			glTexImage2D(target, currentMipmapLevel, internalDataType, width, height, border, format, dataType, nullptr);
+			FBODesc.attachmentType = attachmentType;
+
+			switch (FBODesc.attachmentType)
+			{
+			case FBODescriptor::attachmentType_t::depth:
+			{
+				glTexParameteri(FBODesc.target, gl_depth_texture_mode, GL_LUMINANCE);
+			}
+
+			case FBODescriptor::attachmentType_t::stencil:
+			{
+				glTexParameteri(FBODesc.target, gl_depth_stencil_texture_mode, GL_STENCIL_INDEX);
+			}
+
+			case FBODescriptor::attachmentType_t::depthAndStencil:
+			{
+				glTexParameteri(FBODesc.target, gl_depth_stencil_texture_mode, GL_STENCIL_INDEX);
+			}
+			}
+			
 			UnbindTexture();
 		}
 
-	public:
+		void Draw()
+		{
+			//if the current framebuffer is not this one then bind it
+			switch (FBODesc.attachmentType)
+			{
+			case FBODescriptor::attachmentType_t::stencil:
+			case FBODescriptor::attachmentType_t::depth:
+			case FBODescriptor::attachmentType_t::depthAndStencil:
+			{
+				//if non-color, draw to GL_NONE
+				GLenum attachment = GL_NONE;
+				glDrawBuffers(1, &attachment);
+				break;
+			}
 
-		GLenum					attachmentFormat;
-		GLuint					attachmentHandle;
-		attachmentType_t		attachmentType;
+			default:
+			{
+				glDrawBuffers(1, &FBODesc.attachmentFormat);
+				break;
+			}
+			}
+		}
+
+	public:
+		GLuint			attachmentHandle;
+		FBODescriptor	FBODesc;
 	};
 
 	frameBuffer()
@@ -99,20 +253,41 @@ public:
 		//glBindFramebuffer(gl_framebuffer, bufferHandle);
 	}
 
-	void Bind()
+	void Bind(GLenum target = gl_framebuffer)
 	{
-		glBindFramebuffer(gl_framebuffer, bufferHandle);
+		glBindFramebuffer(target, bufferHandle);
 	}
 
-	static void Unbind()
+	static void Unbind(GLenum target = gl_framebuffer)
 	{
-		glBindFramebuffer(gl_framebuffer, 0);
+		glBindFramebuffer(target, 0);
 	}
 
-	void Draw(unsigned int renderTextureHandle)
+	void DrawAll()
 	{
-		//if the current framebuffer is not this one then bind it
-		glDrawBuffers(1, &attachments[renderTextureHandle]->attachmentFormat);
+		std::vector<GLenum> allImages;
+		for (auto iter : attachments)
+		{
+			switch (iter->FBODesc.attachmentType)
+			{
+			case FBODescriptor::attachmentType_t::stencil:
+			case FBODescriptor::attachmentType_t::depth:
+			case FBODescriptor::attachmentType_t::depthAndStencil:
+				{
+					//if non-color, draw to GL_NONE
+					allImages.push_back(GL_NONE);
+					break;
+				}
+
+				default:
+				{
+					allImages.push_back(iter->FBODesc.attachmentFormat);
+					break;
+				}
+			}
+		}
+
+		glDrawBuffers(allImages.size(), allImages.data());
 	}
 
 	void DrawDepth()
@@ -126,32 +301,65 @@ public:
 
 	}
 
+	void Resize(glm::ivec3 newSize/*, bool unbind = true*/)
+	{
+		//delete the framebuffer
+		//glDeleteFramebuffers(1, &bufferHandle);
+
+		//resize the buffers
+		for (size_t iter = 0; iter < attachments.size(); iter++)
+		{
+			//if its the last one, unbind textures
+			//if (iter == attachments.size() - 1)
+			//{
+				attachments[iter]->Resize(newSize);
+			//}
+
+			/*else if(unbind)
+			{
+				attachments[iter]->Resize(newSize, unbind);							   				 			  
+			}*/
+		}
+		
+		//recreate the framebuffer and re-attach the textures
+		/*glGenFramebuffers(1, &bufferHandle);
+
+
+		for (auto iter : attachments)
+		{
+			iter->Initialize(iter->attachmentFormat);
+		}*/
+
+		//unbind that framebuffers
+		//Unbind();
+	}
+
 	void ClearTexture(attachment_t* attachment, float clearColor[4])
 	{
-		switch (attachment->attachmentType)
+		switch (attachment->FBODesc.attachmentType)
 		{
-		case attachment_t::attachmentType_t::color:
+		case FBODescriptor::attachmentType_t::color:
 		{	
 			glClearBufferfv(GL_COLOR, attachment->attachmentHandle, clearColor);
 			break;
 		}
 
-		case attachment_t::attachmentType_t::depth:
+		case FBODescriptor::attachmentType_t::depth:
 		{
 			glClearBufferfv(GL_DEPTH, 0, clearColor);
 			break;
 		}
 
-		case attachment_t::attachmentType_t::stencil:
+		case FBODescriptor::attachmentType_t::stencil:
 		{
-			glClearBufferfv(GL_STENCIL, 0, clearColor);
+			glClearBufferiv(GL_STENCIL, 0, (GLint*)&clearColor[0]);
 			break;
 		}
 
-		case attachment_t::attachmentType_t::depthAndStencil:
+		case FBODescriptor::attachmentType_t::depthAndStencil:
 		{
-			glClearBufferfv(GL_STENCIL, attachment->attachmentHandle, clearColor);
-			glClearBufferfv(GL_DEPTH, attachment->attachmentHandle, clearColor);
+			//glClearBufferfv(GL_STENCIL, attachment->attachmentHandle, clearColor);
+			glClearBufferfi(GL_DEPTH, attachment->attachmentHandle, clearColor[0], (GLint)clearColor[1]);
 			break;
 		}
 		}
@@ -167,9 +375,9 @@ public:
 			Bind();
 		}
 
-		switch (attachment->attachmentType)
+		switch (attachment->FBODesc.attachmentType)
 		{
-		case attachment_t::attachmentType_t::color:
+		case FBODescriptor::attachmentType_t::color:
 		{
 			attachment->attachmentHandle = colorAttachmentNum;
 			attachment->Initialize(gl_color_attachment0 + colorAttachmentNum);
@@ -177,21 +385,21 @@ public:
 			break;
 		}
 
-		case attachment_t::attachmentType_t::depth:
+		case FBODescriptor::attachmentType_t::depth:
 		{
 			attachment->attachmentHandle = gl_depth_attachment;
 			attachment->Initialize(gl_depth_attachment);
 			break;
 		}
 
-		case attachment_t::attachmentType_t::stencil:
+		case FBODescriptor::attachmentType_t::stencil:
 		{
 			attachment->attachmentHandle = gl_stencil_attachment;
 			attachment->Initialize(gl_stencil_attachment);
 			break;
 		}
 
-		case attachment_t::attachmentType_t::depthAndStencil:
+		case FBODescriptor::attachmentType_t::depthAndStencil:
 		{
 			attachment->attachmentHandle = gl_depth_stencil_attachment;
 			attachment->Initialize(gl_depth_stencil_attachment);
@@ -225,18 +433,65 @@ public:
 		GLenum err = glCheckFramebufferStatus(gl_draw_framebuffer);
 		if (err != gl_framebuffer_complete)
 		{
-			printf("framebuffer creation failed \n");
+			switch (err)
+			{
+			case gl_framebuffer_undefined:
+			{
+				printf("framebuffer undefined \n");
+				break;
+			}
+
+			case gl_framebuffer_incomplete_attachment:
+			{
+				printf("framebuffer incomplete attachment \n");
+				break;
+			}
+
+			case gl_framebuffer_incomplete_missing_attachment:
+			{
+				printf("framebuffer missing attachment \n");
+				break;
+			}
+
+			case gl_framebuffer_incomplete_draw_buffer:
+			{
+				printf("framebuffer incomplete draw buffer \n");
+				break;
+			}
+
+			case gl_framebuffer_incomplete_read_buffer:
+			{
+				printf("framebuffer incomplete read buffer \n");
+				break;
+			}
+
+			case gl_framebuffer_unsupported:
+			{
+				printf("framebuffer unsupported \n");
+				break;
+			}
+
+			case gl_framebuffer_incomplete_multisample:
+			{
+				printf("framebuffer incomplete multisample \n");
+				break;
+			}
+
+			case gl_framebuffer_incomplete_layer_targets:
+			{
+				printf("framebuffer incomplete layer targets \n");
+				break;
+			}
+			}
 			return false;
 		}
 		return true;
 	}
+
 	//ok we need a target, handle, etc.
-	GLuint bufferHandle;
-	std::vector<attachment_t*> attachments;
-	GLuint colorAttachmentNum = 0;
-	GLuint					depthHandle = 0;
+	GLuint							bufferHandle;
+	std::vector<attachment_t*>		attachments;
+	GLuint							colorAttachmentNum = 0;
+	GLuint							depthHandle = 0;
 };
-
-
-
 #endif
