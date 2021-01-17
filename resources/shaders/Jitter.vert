@@ -54,16 +54,21 @@ void main()
 	vec2 jitter = vec2(haltonSequence[index].x * deltaWidth, haltonSequence[index].y * deltaHeight);
 
 	mat4 newProj = projection;
+	//vec4 outPos = projection * view * translation * position;
+
+	mat4 jitterMat = mat4( 1.0 );
 	if(haltonScale > 0)
 	{
-    	newProj[3][0] += jitter.x * haltonScale;
-    	newProj[3][1] += jitter.y * haltonScale;
+    	jitterMat[3][0] += jitter.x * deltaWidth * haltonScale;
+		jitterMat[3][1] += jitter.y * deltaHeight * haltonScale;
+		//outPos.x += jitter.x * deltaWidth;
+		//outPos.y += jitter.y * deltaHeight;
 	}
 
 	outBlock.jitter = jitter;
 
 	//needs to be jittered. nothing else does
-	gl_Position = newProj * view * translation * position; 
+	gl_Position = jitterMat * projection * view * translation * position; 
 	outBlock.uv = uv;
 
 	//these 2 should be in screen space
